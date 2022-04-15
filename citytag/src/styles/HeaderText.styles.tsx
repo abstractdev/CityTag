@@ -7,4 +7,8 @@ export const StyledHeaderText = styled(Link)`
   color: #fff;
   font-size: 4rem;
   text-decoration: none;
+
+  @media screen and (max-width: 600px){
+    font-size: 2rem;
+  }
 `;

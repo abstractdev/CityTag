@@ -7,4 +7,8 @@ export const LeaderboardLink = styled(Link)`
   text-decoration: none;
   font-family: "sky";
   color: #fff;
+
+  @media screen and (max-width: 600px){
+    font-size: 1rem;
+  }
 `;
