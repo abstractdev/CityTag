@@ -33,6 +33,7 @@ body {
   width: 100vw;
   height: 100vh;
 	background-color: #121212;
+	overflow-x: hidden;
 }
 ol, ul {
 	list-style: none;
