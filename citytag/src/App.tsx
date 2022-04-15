@@ -1,7 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyles from './components/GlobalStyles';
+import { GlobalStyles } from './components/GlobalStyles';
+import { Header } from './components/Header';
+import { Home } from './components/Home';
 
 const theme = {
   colors: {
@@ -14,16 +16,16 @@ const theme = {
 
 function App() {
   return (
-    <Routes>
-      <Route>
-        <ThemeProvider theme={theme}>
-          <>
-          <GlobalStyles />
-
-          </>
-        </ThemeProvider>
-      </Route>
-    </Routes>
+    <>
+      <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Header/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/leaderboard" element={} /> */}
+      </Routes>
+      </ThemeProvider>
+    </>
   );
 }
 

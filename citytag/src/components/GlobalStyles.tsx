@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import polka from "../assets/fonts/PolkaDots-Regular.ttf"
+import sky from "../assets/fonts/Skyfont-NonCommercial.otf"
 
-const GlobalStyles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -30,6 +32,7 @@ body {
 	line-height: 1;
   width: 100vw;
   height: 100vh;
+	background-color: #121212;
 }
 ol, ul {
 	list-style: none;
@@ -46,5 +49,15 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+* {
+	box-sizing: border-box;
+}
+@font-face {
+  font-family: 'polka';
+  src: local('polka'), url(${polka}) format('truetype');
+}
+@font-face {
+  font-family: 'sky';
+  src: local('sky'), url(${sky}) format('truetype');
+}
 `
-export default GlobalStyles
