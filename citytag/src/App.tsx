@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './components/GlobalStyles';
 import { Header } from './components/Header';
 import { Home } from './components/Home';
+import { NewYork } from './pages/NewYork';
 
 const theme = {
   colors: {
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/leaderboard" element={} /> */}
+        <Route path="/newyork" element={<NewYork />} />
       </Routes>
       </ThemeProvider>
     </>

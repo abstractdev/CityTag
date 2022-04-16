@@ -1,9 +1,10 @@
 import React from 'react';
-import { HomeContainer } from '../styles/HomeContainer.styles';
-import { HomeText } from '../styles/HomeText';
-import { HomeContent } from '../styles/HomeContent';
-import { HomeNy, HomeRio, HomeTokyo, HomeParis } from '../styles/HomeImages.styles';
+import ny from '../assets/images/ny/ny.jpg'
+import rio from '../assets/images/rio/rio.jpg'
+import tokyo from '../assets/images/tokyo/tokyo.jpg'
+import paris from '../assets/images/paris/paris.jpg'
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 // interface Props {
 // }
@@ -26,22 +27,59 @@ export function Home () {
           <Link to="paris">
             <HomeParis />
           </Link>
-         
         </HomeContent>
       </HomeContainer>
     </>
   );
 }
 
-// import * as React from 'react';
+const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 1rem 4rem;
+  @media screen and (max-width: 600px){
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+`;
 
-// export interface IAppProps {
-// }
+const HomeText = styled.h2`
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  padding-bottom: 1rem;
+  @media screen and (max-width: 600px){
+    font-size: 1rem;
+  }
+`;
 
-// export default function App (props: IAppProps) {
-//   return (
-//     <div>
-      
-//     </div>
-//   );
-// }
+const HomeContent = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media screen and (max-width: 600px){
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HomeImageContainer = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
+`
+
+const HomeNy = styled(HomeImageContainer)`
+  background-image: url(${ny});
+`;
+const HomeRio = styled(HomeImageContainer)`
+  background-image: url(${rio});
+`;
+const HomeTokyo = styled(HomeImageContainer)`
+  background-image: url(${tokyo});
+`;
+const HomeParis = styled(HomeImageContainer)`
+  background-image: url(${paris});
+`;
