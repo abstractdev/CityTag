@@ -5,6 +5,9 @@ import { GlobalStyles } from './components/GlobalStyles';
 import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { NewYork } from './pages/NewYork';
+import { Rio } from './pages/Rio';
+import { Tokyo } from './pages/Tokyo';
+import { Paris } from './pages/Paris';
 
 const theme = {
   colors: {
@@ -25,6 +28,9 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* <Route path="/leaderboard" element={} /> */}
         <Route path="/newyork" element={<NewYork />} />
+        <Route path="/rio" element={<Rio />} />
+        <Route path="/tokyo" element={<Tokyo />} />
+        <Route path="/paris" element={<Paris />} />
       </Routes>
       </ThemeProvider>
     </>

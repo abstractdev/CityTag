@@ -1,16 +1,16 @@
 import React from "react";
-import ny from '../assets/images/ny/ny.jpg'
+import tokyo from '../assets/images/tokyo/tokyo.jpg'
 import { VFlexContainer } from "../styles/VFlexContainer.styles";
 import { ImageContainer } from "../styles/ImageContainer.style";
 import { Find } from "../components/Find";
 
 
-export function NewYork() {
+export function Tokyo() {
   return (
     <>
         <VFlexContainer>
           <Find/>
-          <ImageContainer src={ny}/>  
+          <ImageContainer src={tokyo}/>  
         </VFlexContainer>
     </>
   );
