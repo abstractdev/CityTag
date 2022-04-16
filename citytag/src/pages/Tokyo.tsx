@@ -1,17 +1,16 @@
 import React from "react";
-import tokyo from '../assets/images/tokyo/tokyo.jpg'
+import tokyo from "../assets/images/tokyo/tokyo.jpg";
 import { VFlexContainer } from "../styles/VFlexContainer.styles";
 import { ImageContainer } from "../styles/ImageContainer.style";
-import { Find } from "../components/Find";
-
+import { FindTokyo } from "../components/Find";
 
 export function Tokyo() {
   return (
     <>
-        <VFlexContainer>
-          <Find/>
-          <ImageContainer src={tokyo}/>  
-        </VFlexContainer>
+      <VFlexContainer>
+        <FindTokyo />
+        <ImageContainer src={tokyo} />
+      </VFlexContainer>
     </>
   );
 }

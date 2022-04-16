@@ -9,6 +9,7 @@ import { Rio } from './pages/Rio';
 import { Tokyo } from './pages/Tokyo';
 import { Paris } from './pages/Paris';
 
+
 const theme = {
   colors: {
     header: '#121212',
@@ -19,6 +20,7 @@ const theme = {
 
 
 function App() {
+  
   return (
     <>
       <ThemeProvider theme={theme}>

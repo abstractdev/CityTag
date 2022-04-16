@@ -1,17 +1,16 @@
 import React from "react";
-import rio from '../assets/images/rio/rio.jpg'
+import rio from "../assets/images/rio/rio.jpg";
 import { VFlexContainer } from "../styles/VFlexContainer.styles";
 import { ImageContainer } from "../styles/ImageContainer.style";
-import { Find } from "../components/Find";
-
+import { FindRio } from "../components/Find";
 
 export function Rio() {
   return (
     <>
-        <VFlexContainer>
-          <Find/>
-          <ImageContainer src={rio}/>  
-        </VFlexContainer>
+      <VFlexContainer>
+        <FindRio />
+        <ImageContainer src={rio} />
+      </VFlexContainer>
     </>
   );
 }
