@@ -30,10 +30,10 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  max-width: 100vw;
+  width: 100vw;
   height: 100vh;
 	background-color: #121212;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 #root {
 	max-width: 100%;
