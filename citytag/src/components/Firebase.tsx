@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,17 +13,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-
-//Firebase functions
-export async function checkFirebaseForMatch() {
-  const temp: any[] = [];
-
-  const querySnapshot = await getDocs(collection(db, "ny"));
-  querySnapshot.forEach((doc) => {
-    temp.push(doc.data());
-  });
-  temp.forEach((e: { div: string }) => {
-    console.log(e.div);
-  });
-}
+export const db = getFirestore(firebaseApp);
