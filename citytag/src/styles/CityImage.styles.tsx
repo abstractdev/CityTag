@@ -9,4 +9,5 @@ export const CityImage = styled.img`
 export const CityImageContainer = styled(VFlexContainer)`
   width: 100%;
   height: auto;
+  position: relative;
 `
