@@ -24,16 +24,18 @@ function App() {
   const [mouseY, setMouseY] = useState(0);
   const [imageIsClicked, setImageIsClicked] = useState(false);
   const [clickHistory, setClickHistory] = useState([]);
+  const [broadwayIsFound, setBroadwayIsFound] = useState(false);
+  const [hotdogIsFound, setHotdogIsFound] = useState(false);
+  const [ilovenyIsFound, setIlovenyIsFound] = useState(false);
+  const [policeIsFound, setPoliceIsFound] = useState(false);
 
   useEffect(() => {
     if (
-      clickHistory.includes(
-        "broadwayFound" && "policeFound" && "ilovenyFound" && "hotdogFound"
-      )
+      broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound
     ) {
       alert("All items have been found!");
     }
-  }, [clickHistory]);
+  }, [broadwayIsFound, hotdogIsFound, ilovenyIsFound, policeIsFound]);
 
   function handleMouseClickPosition(event: React.MouseEvent) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -79,6 +81,14 @@ function App() {
                 mouseY={mouseY}
                 imageIsClicked={imageIsClicked}
                 clickHistory={clickHistory}
+                broadwayIsFound={broadwayIsFound}
+                hotdogIsFound={hotdogIsFound}
+                ilovenyIsFound={ilovenyIsFound}
+                policeIsFound={policeIsFound}
+                setBroadwayIsFound={setBroadwayIsFound}
+                setHotdogIsFound={setHotdogIsFound}
+                setIlovenyIsFound={setIlovenyIsFound}
+                setPoliceIsFound={setPoliceIsFound}
                 setClickHistory={setClickHistory}
                 handleMouseClickPosition={handleMouseClickPosition}
                 checkFirebaseForMatch={checkFirebaseForMatch}
