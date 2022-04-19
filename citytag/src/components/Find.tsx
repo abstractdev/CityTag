@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { FindImageContainer } from "../styles/VFlexContainer.styles";
+import { VFlexContainer } from "../styles/VFlexContainer.styles";
 import broadway from "../assets/images/ny/broadway.jpg";
 import hotdog from "../assets/images/ny/hotdog.jpg";
 import iloveny from "../assets/images/ny/iloveny.jpg";
@@ -18,24 +17,31 @@ import fleurdelis from "../assets/images/paris/fleurdelis.jpg";
 import monalisa from "../assets/images/paris/monalisa.jpg";
 import tophat from "../assets/images/paris/tophat.jpg";
 
-export function FindNy() {
+export interface nyProps {
+  broadwayText: string,
+  hotdogText: string,
+  ilovenyText: string,
+  policeText: string
+}
+
+export function FindNy(props: nyProps) {
   return (
     <>
       <FindContainer>
         <FindImageContainer>
           <FindImage src={broadway} />
-          Broadway Sign
+          {props.broadwayText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={hotdog} />
-          Hot Dog Vendor
+          {props.hotdogText}
         </FindImageContainer>
         <FindImageContainer>
-          <FindImage src={iloveny} />I Love NY Shirt
+          <FindImage src={iloveny} />{props.ilovenyText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={police} />
-          NYPD Officer
+          {props.policeText}
         </FindImageContainer>
       </FindContainer>
     </>
@@ -121,7 +127,18 @@ const FindContainer = styled.div`
   align-items: center;
   text-align: center;
   height: auto;
+  color: #FFF;
 `;
+
+const FindImageContainer = styled(VFlexContainer)`
+  height: 100px;
+  width: 200px;
+  gap: .3rem;
+@media screen and (max-width: 600px){
+  font-size: 0;
+  height: 60px;
+}
+`
 
 const FindImage = styled.img`
   width: 100%;
