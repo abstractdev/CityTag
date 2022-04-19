@@ -17,30 +17,34 @@ import fleurdelis from "../assets/images/paris/fleurdelis.jpg";
 import monalisa from "../assets/images/paris/monalisa.jpg";
 import tophat from "../assets/images/paris/tophat.jpg";
 
-export interface nyProps {
+interface nyProps {
   broadwayText: string,
   hotdogText: string,
   ilovenyText: string,
-  policeText: string
+  policeText: string,
+  broadwayIsFound: boolean,
+  hotdogIsFound: boolean,
+  ilovenyIsFound: boolean,
+  policeIsFound: boolean,
 }
 
-export function FindNy(props: nyProps) {
+export function NewYorkFind(props: nyProps) {
   return (
     <>
       <FindContainer>
         <FindImageContainer>
-          <FindImage src={broadway} />
+          <FindImage src={broadway} style={ props.broadwayIsFound ? { opacity:'30%'} : {}}/>
           {props.broadwayText}
         </FindImageContainer>
         <FindImageContainer>
-          <FindImage src={hotdog} />
+          <FindImage src={hotdog} style={ props.hotdogIsFound ? { opacity:'30%'} : {}}/>
           {props.hotdogText}
         </FindImageContainer>
         <FindImageContainer>
-          <FindImage src={iloveny} />{props.ilovenyText}
+          <FindImage src={iloveny} style={ props.ilovenyIsFound ? { opacity:'30%'} : {}}/>{props.ilovenyText}
         </FindImageContainer>
         <FindImageContainer>
-          <FindImage src={police} />
+          <FindImage src={police} style={ props.policeIsFound ? { opacity:'30%'} : {}}/>
           {props.policeText}
         </FindImageContainer>
       </FindContainer>
