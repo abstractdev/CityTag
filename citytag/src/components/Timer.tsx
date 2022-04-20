@@ -1,41 +1,37 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 
-export function Timer() {
+interface TimerProps {
+  time: number;
+  isActive: boolean;
+}
 
-  const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(true);
-
-  useEffect(() => {
-    let interval: NodeJS.Timer;
-    if (isActive) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
-    } else if (!isActive) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive]);
-
+export function Timer(props: TimerProps) {
+  
   return (
     <>
-      <TimerDiv>
-        <MinutesSpan>{("0" + Math.floor((time / 60000) % 60)).slice(-1)}<span style={{fontSize: '70%'}}>min</span>
+      <TimerDiv isActive={props.isActive}>
+        <MinutesSpan>{("0" + Math.floor((props.time / 60000) % 60)).slice(-1)}<span style={{fontSize: '70%'}}>m</span>
         </MinutesSpan>
-        <SecondsSpan>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}<span style={{fontSize: '70%'}}>s</span> 
+        <SecondsSpan>{("0" + Math.floor((props.time / 1000) % 60)).slice(-2)}<span style={{fontSize: '70%'}}>s</span> 
         </SecondsSpan>
-        <MillisecondsSpan>{("0" + (time % 1000)).slice(-2)}<span style={{fontSize: '70%'}}>ms</span>
+        <MillisecondsSpan>{("0" + (props.time % 1000)).slice(-2)}<span style={{fontSize: '70%'}}>ms</span>
         </MillisecondsSpan>
       </TimerDiv>
     </>
   );
 }
 
-const TimerDiv = styled.div`
+interface TimerDivProps {
+  isActive: boolean;
+}
+
+const TimerDiv = styled.div<TimerDivProps>`
   display: flex;
   justify-content: center;
   align-content: center;
+  padding: .2em;
+  border: ${(props) => (!props.isActive ? "3px solid #FFF" : "none")};
+  border-radius: ${(props) => (!props.isActive ? "5px" : "none")};
   @media screen and (max-width: 630px){
     font-size: .6rem;
   }

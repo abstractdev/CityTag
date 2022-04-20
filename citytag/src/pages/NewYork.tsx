@@ -5,6 +5,7 @@ import { CityImage } from "../styles/CityImage.styles";
 import { NewYorkFind } from "../components/Find";
 import { CityImageContainer } from "../styles/CityImage.styles";
 import { NewYorkDropdown } from "../components/NewYorkDropdown";
+import { useEffect } from "react";
 
 interface nyProps {
   mouseX: number;
@@ -15,6 +16,10 @@ interface nyProps {
   hotdogIsFound: boolean;
   ilovenyIsFound: boolean;
   policeIsFound: boolean;
+  isActive: boolean;
+  time: number;
+  setTime: (prevstate: (time:number) => number) => void;
+  setIsActive:(isActive: boolean) => void;
   setBroadwayIsFound: (broadwayIsFound: boolean) => void;
   setHotdogIsFound: (hotdogIsFound: boolean) => void;
   setIlovenyIsFound: (ilovenyIsFound: boolean) => void;
@@ -25,6 +30,27 @@ interface nyProps {
 }
 
 export function NewYork(props: nyProps) {
+  const {mouseX, mouseY, imageIsClicked, clickHistory, broadwayIsFound, hotdogIsFound, ilovenyIsFound, policeIsFound, isActive, setTime, setIsActive, setBroadwayIsFound, setHotdogIsFound, setIlovenyIsFound, setPoliceIsFound, setClickHistory, handleMouseClickPosition, checkFirebaseForMatch} = props;
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, setTime]);
+
+  useEffect(() => {
+    if (
+      broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound
+    ) {
+      setIsActive(false);
+    }
+  }, [broadwayIsFound, hotdogIsFound, ilovenyIsFound, policeIsFound, setIsActive]);
+
   const broadwayText = "Broadway Sign";
   const hotdogText = "Hot Dog Vendor";
   const ilovenyText = "I Love NY Shirt";
@@ -38,53 +64,49 @@ export function NewYork(props: nyProps) {
           hotdogText={hotdogText}
           ilovenyText={ilovenyText}
           policeText={policeText}
-          broadwayIsFound={props.broadwayIsFound}
-          hotdogIsFound={props.hotdogIsFound}
-          ilovenyIsFound={props.ilovenyIsFound}
-          policeIsFound={props.policeIsFound}
+          broadwayIsFound={broadwayIsFound}
+          hotdogIsFound={hotdogIsFound}
+          ilovenyIsFound={ilovenyIsFound}
+          policeIsFound={policeIsFound}
         />
         <CityImageContainer
-          onClick={(event) => props.handleMouseClickPosition(event)}
+          onClick={(event) => handleMouseClickPosition(event)}
         >
           <CityImage src={ny} />
           <BroadwayDiv
-            broadwayIsFound={props.broadwayIsFound}
+            broadwayIsFound={broadwayIsFound}
             data-id="broadwayDiv"
-            onClick={(event) => props.checkFirebaseForMatch(event, "ny")}
+            onClick={(event) => checkFirebaseForMatch(event, "ny")}
           ></BroadwayDiv>
           <HotdogDiv
-            hotdogIsFound={props.hotdogIsFound}
+            hotdogIsFound={hotdogIsFound}
             data-id="hotdogDiv"
-            onClick={(event) => props.checkFirebaseForMatch(event, "ny")}
+            onClick={(event) => checkFirebaseForMatch(event, "ny")}
           ></HotdogDiv>
           <IlovenyDiv
-            ilovenyIsFound={props.ilovenyIsFound}
+            ilovenyIsFound={ilovenyIsFound}
             data-id="ilovenyDiv"
-            onClick={(event) => props.checkFirebaseForMatch(event, "ny")}
+            onClick={(event) => checkFirebaseForMatch(event, "ny")}
           ></IlovenyDiv>
           <PoliceDiv
-            policeIsFound={props.policeIsFound}
+            policeIsFound={policeIsFound}
             data-id="policeDiv"
-            onClick={(event) => props.checkFirebaseForMatch(event, "ny")}
+            onClick={(event) => checkFirebaseForMatch(event, "ny")}
           ></PoliceDiv>
           <NewYorkDropdown
-            mouseX={props.mouseX}
-            mouseY={props.mouseY}
+            mouseX={mouseX}
+            mouseY={mouseY}
             broadwayText={broadwayText}
             hotdogText={hotdogText}
             ilovenyText={ilovenyText}
             policeText={policeText}
-            imageIsClicked={props.imageIsClicked}
-            clickHistory={props.clickHistory}
-            setClickHistory={props.setClickHistory}
-            // broadwayIsFound={broadwayIsFound}
-            // hotdogIsFound={hotdogIsFound}
-            // ilovenyIsFound={ilovenyIsFound}
-            // policeIsFound={policeIsFound}
-            setBroadwayIsFound={props.setBroadwayIsFound}
-            setHotdogIsFound={props.setHotdogIsFound}
-            setIlovenyIsFound={props.setIlovenyIsFound}
-            setPoliceIsFound={props.setPoliceIsFound}
+            imageIsClicked={imageIsClicked}
+            clickHistory={clickHistory}
+            setClickHistory={setClickHistory}
+            setBroadwayIsFound={setBroadwayIsFound}
+            setHotdogIsFound={setHotdogIsFound}
+            setIlovenyIsFound={setIlovenyIsFound}
+            setPoliceIsFound={setPoliceIsFound}
           />
         </CityImageContainer>
       </VFlexContainer>
@@ -106,7 +128,7 @@ const BroadwayDiv = styled.div<DivProps>`
   position: absolute;
   left: 53.5%;
   bottom: 84.2%;
-  border: ${(props) => (props.broadwayIsFound ? "3px solid red" : "none")};
+  border: ${(props) => (props.broadwayIsFound ? "3px solid black" : "none")};
   border-radius: 5px;
 `;
 const HotdogDiv = styled.div<DivProps>`
@@ -115,7 +137,7 @@ const HotdogDiv = styled.div<DivProps>`
   position: absolute;
   left: 15.5%;
   bottom: 32%;
-  border: ${(props) => (props.hotdogIsFound ? "3px solid red" : "none")};
+  border: ${(props) => (props.hotdogIsFound ? "3px solid black" : "none")};
   border-radius: 5px;
 `;
 const IlovenyDiv = styled.div<DivProps>`
@@ -124,7 +146,7 @@ const IlovenyDiv = styled.div<DivProps>`
   position: absolute;
   left: 46%;
   bottom: 42%;
-  border: ${(props) => (props.ilovenyIsFound ? "3px solid red" : "none")};
+  border: ${(props) => (props.ilovenyIsFound ? "3px solid black" : "none")};
   border-radius: 5px;
 `;
 const PoliceDiv = styled.div<DivProps>`
@@ -133,6 +155,6 @@ const PoliceDiv = styled.div<DivProps>`
   position: absolute;
   left: 52%;
   bottom: 61%;
-  border: ${(props) => (props.policeIsFound ? "3px solid red" : "none")};
+  border: ${(props) => (props.policeIsFound ? "3px solid black" : "none")};
   border-radius: 5px;
 `;
