@@ -32,26 +32,26 @@ export function NewYorkFind(props: nyProps) {
   return (
     <>
       <FindContainer>
-        <FindImageContainer>
-          <FindImage src={broadway} style={ props.broadwayIsFound ? { opacity:'30%'} : {}}/>
+        <FindImageContainer style={ props.broadwayIsFound ? { opacity:'30%'} : {}}>
+          <FindImage src={broadway} />
           {props.broadwayText}
         </FindImageContainer>
-        <FindImageContainer>
-          <FindImage src={hotdog} style={ props.hotdogIsFound ? { opacity:'30%'} : {}}/>
+        <FindImageContainer style={ props.hotdogIsFound ? { opacity:'30%'} : {}}>
+          <FindImage src={hotdog} />
           {props.hotdogText}
         </FindImageContainer>
-        <FindImageContainer>
-          <FindImage src={iloveny} style={ props.ilovenyIsFound ? { opacity:'30%'} : {}}/>{props.ilovenyText}
+        <FindImageContainer style={ props.ilovenyIsFound ? { opacity:'30%'} : {}}>
+          <FindImage src={iloveny} />{props.ilovenyText}
         </FindImageContainer>
-        <FindImageContainer>
-          <FindImage src={police} style={ props.policeIsFound ? { opacity:'30%'} : {}}/>
+        <FindImageContainer style={ props.policeIsFound ? { opacity:'30%'} : {}}>
+          <FindImage src={police} />
           {props.policeText}
         </FindImageContainer>
       </FindContainer>
     </>
   );
 }
-export function FindRio() {
+export function RioFind() {
   return (
     <>
       <FindContainer>
@@ -75,7 +75,7 @@ export function FindRio() {
     </>
   );
 }
-export function FindTokyo() {
+export function TokyoFind() {
   return (
     <>
       <FindContainer>
@@ -99,7 +99,7 @@ export function FindTokyo() {
     </>
   );
 }
-export function FindParis() {
+export function ParisFind() {
   return (
     <>
       <FindContainer>
