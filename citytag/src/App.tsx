@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";
@@ -28,14 +28,8 @@ function App() {
   const [hotdogIsFound, setHotdogIsFound] = useState(false);
   const [ilovenyIsFound, setIlovenyIsFound] = useState(false);
   const [policeIsFound, setPoliceIsFound] = useState(false);
-
-  useEffect(() => {
-    if (
-      broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound
-    ) {
-      alert("All items have been found!");
-    }
-  }, [broadwayIsFound, hotdogIsFound, ilovenyIsFound, policeIsFound]);
+  const [time, setTime] = useState(0);
+  const [isActive, setIsActive] = useState(true);
 
   function handleMouseClickPosition(event: React.MouseEvent) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -69,7 +63,7 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <Header />
+        <Header time={time} isActive={isActive}/>
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/leaderboard" element={} /> */}
@@ -85,6 +79,10 @@ function App() {
                 hotdogIsFound={hotdogIsFound}
                 ilovenyIsFound={ilovenyIsFound}
                 policeIsFound={policeIsFound}
+                isActive={isActive}
+                time={time}
+                setTime = {setTime}
+                setIsActive={setIsActive}
                 setBroadwayIsFound={setBroadwayIsFound}
                 setHotdogIsFound={setHotdogIsFound}
                 setIlovenyIsFound={setIlovenyIsFound}
