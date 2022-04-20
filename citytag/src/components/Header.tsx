@@ -1,11 +1,17 @@
-import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Timer } from "./Timer";
 
-export function Header() {
+interface headerProps {
+  time: number;
+  isActive: boolean;
+}
+
+export function Header(props: headerProps) {
   return (
     <StyledHeaderContainer>
       <StyledHeaderText to="/">City Tag</StyledHeaderText>
+      <Timer time={props.time} isActive={props.isActive}/>
       <LeaderboardLinkContainer>
         <LeaderboardLink to={"/leaderboard"}>Leaderboard</LeaderboardLink>
       </LeaderboardLinkContainer>
