@@ -19,11 +19,14 @@ export function RioDropdown(props: DropdownProps) {
     setFlagIsFound,
     setSoccerIsFound,
     setTambourineIsFound,
+    dropdownIsShifted,
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
   const adjDropdownY = mouseY + 17;
   const adjDropdownX = mouseX + 17;
+  const shiftedDropdownY = mouseY - 118;
+  const shiftedDropdownX = mouseX - 118;
 
   function checkIfDivAndDropdownMatch(event: any) {
     if (clickHistory.includes(`${event.target.dataset.id}Div`)) {
@@ -66,8 +69,12 @@ export function RioDropdown(props: DropdownProps) {
           />
           <DropdownContainerRio
             style={{
-              top: `${adjDropdownY.toString()}px`,
-              left: `${adjDropdownX.toString()}px`,
+              top: dropdownIsShifted
+                ? `${shiftedDropdownY.toString()}px`
+                : `${adjDropdownY.toString()}px`,
+              left: dropdownIsShifted
+                ? `${shiftedDropdownX.toString()}px`
+                : `${adjDropdownX.toString()}px`,
             }}
           >
             <ul>
@@ -109,7 +116,7 @@ const TargetBoxRio = styled(TargetBox)`
 `;
 
 const DropdownContainerRio = styled(DropdownContainer)`
-  border: 5px dotted #00ad73;
+  /* border: 5px dotted #00ad73; */
   background-color: #00ad73;
   width: 96px;
 `;
