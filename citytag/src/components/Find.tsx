@@ -16,69 +16,68 @@ import brie from "../assets/images/paris/brie.jpg";
 import fleurdelis from "../assets/images/paris/fleurdelis.jpg";
 import monalisa from "../assets/images/paris/monalisa.jpg";
 import tophat from "../assets/images/paris/tophat.jpg";
+import { FindProps } from "../Interfaces";
 
-interface nyProps {
-  broadwayText: string,
-  hotdogText: string,
-  ilovenyText: string,
-  policeText: string,
-  broadwayIsFound: boolean,
-  hotdogIsFound: boolean,
-  ilovenyIsFound: boolean,
-  policeIsFound: boolean,
-}
-
-export function NewYorkFind(props: nyProps) {
+export function NewYorkFind(props: FindProps) {
   return (
     <>
-      <FindContainer>
-        <FindImageContainer style={ props.broadwayIsFound ? { opacity:'30%'} : {}}>
+      <FindContainerNewYork>
+        <FindImageContainer
+          style={props.broadwayIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={broadway} />
           {props.broadwayText}
         </FindImageContainer>
-        <FindImageContainer style={ props.hotdogIsFound ? { opacity:'30%'} : {}}>
+        <FindImageContainer
+          style={props.hotdogIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={hotdog} />
           {props.hotdogText}
         </FindImageContainer>
-        <FindImageContainer style={ props.ilovenyIsFound ? { opacity:'30%'} : {}}>
-          <FindImage src={iloveny} />{props.ilovenyText}
+        <FindImageContainer
+          style={props.ilovenyIsFound ? { opacity: "30%" } : {}}
+        >
+          <FindImage src={iloveny} />
+          {props.ilovenyText}
         </FindImageContainer>
-        <FindImageContainer style={ props.policeIsFound ? { opacity:'30%'} : {}}>
+        <FindImageContainer
+          style={props.policeIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={police} />
           {props.policeText}
         </FindImageContainer>
-      </FindContainer>
+      </FindContainerNewYork>
     </>
   );
 }
-export function RioFind() {
+export function RioFind(props: FindProps) {
   return (
     <>
-      <FindContainer>
+      <FindContainerRio>
         <FindImageContainer>
           <FindImage src={dancer} />
-          Dancer
+          {props.dancerText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={flag} />
-          Flag
+          {props.flagText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={soccer} />
-          Soccer Ball
+          {props.soccerText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={tambourine} />
-          Tambourine
+          {props.tambourineText}
         </FindImageContainer>
-      </FindContainer>
+      </FindContainerRio>
     </>
   );
 }
 export function TokyoFind() {
   return (
     <>
-      <FindContainer>
+      <FindContainerTokyo>
         <FindImageContainer>
           <FindImage src={geisha} />
           Geisha
@@ -95,14 +94,14 @@ export function TokyoFind() {
           <FindImage src={sumo} />
           Sumo Wrestler
         </FindImageContainer>
-      </FindContainer>
+      </FindContainerTokyo>
     </>
   );
 }
 export function ParisFind() {
   return (
     <>
-      <FindContainer>
+      <FindContainerParis>
         <FindImageContainer>
           <FindImage src={brie} />
           Brie
@@ -119,7 +118,7 @@ export function ParisFind() {
           <FindImage src={tophat} />
           Tophat
         </FindImageContainer>
-      </FindContainer>
+      </FindContainerParis>
     </>
   );
 }
@@ -131,18 +130,32 @@ const FindContainer = styled.div`
   align-items: center;
   text-align: center;
   height: auto;
-  color: #FFF;
+  color: 121212;
+  font-family: "metropolis";
+`;
+
+const FindContainerNewYork = styled(FindContainer)`
+  background-color: #f2c205;
+`;
+const FindContainerRio = styled(FindContainer)`
+  background-color: #00ad73;
+`;
+const FindContainerTokyo = styled(FindContainer)`
+  background-color: #d78ebf;
+`;
+const FindContainerParis = styled(FindContainer)`
+  background-color: #f8480f;
 `;
 
 const FindImageContainer = styled(VFlexContainer)`
   height: 100px;
   width: 200px;
-  gap: .3rem;
-@media screen and (max-width: 600px){
-  font-size: 0;
-  height: 60px;
-}
-`
+  gap: 0.3rem;
+  @media screen and (max-width: 600px) {
+    font-size: 0;
+    height: 60px;
+  }
+`;
 
 const FindImage = styled.img`
   width: 100%;
