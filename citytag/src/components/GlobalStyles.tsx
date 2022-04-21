@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
-import polka from "../assets/fonts/PolkaDots-Regular.ttf"
 import sky from "../assets/fonts/Skyfont-NonCommercial.otf"
+import metropolis from "../assets/fonts/metropolis.regular.otf"
+import city from "../assets/fonts/CityStencil.ttf"
 
 export const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -58,11 +59,15 @@ table {
 	box-sizing: border-box;
 }
 @font-face {
-  font-family: 'polka';
-  src: local('polka'), url(${polka}) format('truetype');
+  font-family: 'sky';
+  src: local('sky'), url(${sky});
 }
 @font-face {
-  font-family: 'sky';
-  src: local('sky'), url(${sky}) format('truetype');
+  font-family: 'metropolis';
+  src: local('metropolis'), url(${metropolis});
+}
+@font-face {
+  font-family: 'city';
+  src: local('city'), url(${city});
 }
 `
