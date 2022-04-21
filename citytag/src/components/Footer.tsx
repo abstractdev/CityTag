@@ -11,6 +11,10 @@ export function Footer() {
 }
 
 const StyledFooterContainer = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  /* width: 100%; */
   display: flex;
   align-content: center;
   background-color: #FFF;

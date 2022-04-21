@@ -22,8 +22,8 @@ export function NewYorkDropdown(props: DropdownProps) {
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
-  const adjDropdownY = mouseY + 17;
-  const adjDropdownX = mouseX + 17;
+  const adjDropdownY = mouseY + 20;
+  const adjDropdownX = mouseX + 20;
 
   function checkIfDivAndDropdownMatch(event: any) {
     if (clickHistory.includes(`${event.target.dataset.id}Div`)) {
@@ -105,7 +105,7 @@ export function NewYorkDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxNewYork = styled(TargetBox)`
-  border: 5px solid #f2c205;
+  border: 8px solid #f2c205;
 `;
 
 const DropdownContainerNewYork = styled(DropdownContainer)`

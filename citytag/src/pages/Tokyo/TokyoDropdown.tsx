@@ -23,10 +23,11 @@ export function TokyoDropdown(props: DropdownProps) {
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
-  const adjDropdownY = mouseY + 17;
-  const adjDropdownX = mouseX + 17;
-  const shiftedDropdownY = mouseY - 118;
-  const shiftedDropdownX = mouseX - 118;
+  const adjDropdownY = mouseY + 20;
+  const adjDropdownX = mouseX + 20;
+  const shiftedDropdownY = mouseY - 120;
+  const shiftedDropdownX = mouseX - 120;
+
 
   function checkIfDivAndDropdownMatch(event: any) {
     if (clickHistory.includes(`${event.target.dataset.id}Div`)) {
@@ -112,7 +113,7 @@ export function TokyoDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxTokyo = styled(TargetBox)`
-  border: 5px solid #d78ebf;
+  border: 8px solid #d78ebf;
 `;
 
 const DropdownContainerTokyo = styled(DropdownContainer)`

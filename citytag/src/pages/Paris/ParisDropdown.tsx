@@ -23,10 +23,10 @@ export function ParisDropdown(props: DropdownProps) {
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
-  const adjDropdownY = mouseY + 17;
-  const adjDropdownX = mouseX + 17;
-  const shiftedDropdownY = mouseY - 118;
-  const shiftedDropdownX = mouseX - 118;
+  const adjDropdownY = mouseY + 20;
+  const adjDropdownX = mouseX + 20;
+  const shiftedDropdownY = mouseY - 120;
+  const shiftedDropdownX = mouseX - 120;
 
   function checkIfDivAndDropdownMatch(event: any) {
     if (clickHistory.includes(`${event.target.dataset.id}Div`)) {
@@ -112,7 +112,7 @@ export function ParisDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxParis = styled(TargetBox)`
-  border: 5px solid #f94910;
+  border: 8px solid #f94910;
 `;
 
 const DropdownContainerParis = styled(DropdownContainer)`

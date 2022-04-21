@@ -6,6 +6,7 @@ export const TargetBox = styled.div`
   height: 50px;
   position: absolute;
   border-radius: 50%;
+  outline: 3px solid #121212;
 `;
 
 export const DropdownContainer = styled(VFlexContainer)`
