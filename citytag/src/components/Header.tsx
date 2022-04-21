@@ -10,7 +10,9 @@ interface headerProps {
 export function Header(props: headerProps) {
   return (
     <StyledHeaderContainer>
-      <StyledHeaderText to="/">City Tag</StyledHeaderText>
+      <StyledHeaderTextContainer>
+        <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
+      </StyledHeaderTextContainer>
       <Timer time={props.time} isActive={props.isActive}/>
       <LeaderboardLinkContainer>
         <LeaderboardLink to={"/leaderboard"}>Leaderboard</LeaderboardLink>
@@ -23,7 +25,7 @@ const StyledHeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.header};
   display: flex;
   padding: 1rem 4rem;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #fff;
   @media screen and (max-width: 600px){
@@ -31,10 +33,13 @@ const StyledHeaderContainer = styled.div`
     padding-right: 2rem;
   }
 `;
+const StyledHeaderTextContainer = styled.div`
+display: flex;
+align-items: center;
+`
 
 const StyledHeaderText = styled(Link)`
-  display: inline-block;
-  font-family: "polka";
+  font-family: "city";
   color: #fff;
   font-size: 4rem;
   text-decoration: none;
@@ -45,11 +50,11 @@ const StyledHeaderText = styled(Link)`
 `;
 
 const LeaderboardLinkContainer = styled.div`
-  display: inline-block;
+  display: flex;
+  align-items: center;
 `;
 
 const LeaderboardLink = styled(Link)`
-  display: inline-block;
   font-size: 2rem;
   text-decoration: none;
   font-family: "sky";
