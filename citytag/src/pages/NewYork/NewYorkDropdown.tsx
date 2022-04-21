@@ -109,7 +109,7 @@ const TargetBoxNewYork = styled(TargetBox)`
 `;
 
 const DropdownContainerNewYork = styled(DropdownContainer)`
-  border: 5px solid #f2c205;
+  /* border: 5px solid #f2c205; */
   background-color: #f2c205;
   color: #121212;
 `;

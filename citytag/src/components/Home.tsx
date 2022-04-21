@@ -1,15 +1,12 @@
-import React from 'react';
-import ny from '../assets/images/ny/ny.jpg'
-import rio from '../assets/images/rio/rio.jpg'
-import tokyo from '../assets/images/tokyo/tokyo.jpg'
-import paris from '../assets/images/paris/paris.jpg'
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import ny from "../assets/images/ny/ny.jpg";
+import rio from "../assets/images/rio/rio.jpg";
+import tokyo from "../assets/images/tokyo/tokyo.jpg";
+import paris from "../assets/images/paris/paris.jpg";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-// interface Props {
-// }
-
-export function Home () {
+export function Home() {
   return (
     <>
       <HomeContainer>
@@ -39,7 +36,7 @@ const HomeContainer = styled.div`
   justify-content: center;
   align-content: center;
   padding: 1rem 4rem;
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 644px) {
     padding-left: 2rem;
     padding-right: 2rem;
   }
@@ -50,7 +47,7 @@ const HomeText = styled.h2`
   color: #fff;
   text-align: center;
   padding-bottom: 1rem;
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 644px) {
     font-size: 1rem;
   }
 `;
@@ -60,7 +57,7 @@ const HomeContent = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 644px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -69,7 +66,7 @@ const HomeImageContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 300px;
-`
+`;
 
 const HomeNy = styled(HomeImageContainer)`
   background-image: url(${ny});

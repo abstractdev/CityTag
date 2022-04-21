@@ -70,7 +70,7 @@ export function NewYork(props: CityProps) {
 
   return (
     <>
-      <NewYorkContainer>
+      <VFlexContainer>
         <NewYorkFind
           broadwayText={broadwayText}
           hotdogText={hotdogText}
@@ -121,7 +121,7 @@ export function NewYork(props: CityProps) {
             setPoliceIsFound={setPoliceIsFound}
           />
         </CityImageContainer>
-      </NewYorkContainer>
+      </VFlexContainer>
     </>
   );
 }
@@ -134,16 +134,13 @@ interface DivProps {
   policeIsFound?: boolean;
 }
 
-const NewYorkContainer = styled(VFlexContainer)`
-  background-color: #f2c205;
-`;
 const BroadwayDiv = styled.div<DivProps>`
   width: 7%;
   height: 6.2%;
   position: absolute;
   left: 53.5%;
   bottom: 84.2%;
-  border: ${(props) => (props.broadwayIsFound ? "5px solid black" : "none")};
+  border: ${(props) => (props.broadwayIsFound ? "5px solid #f2c205" : "none")};
   border-radius: 5px;
 `;
 const HotdogDiv = styled.div<DivProps>`
@@ -152,7 +149,7 @@ const HotdogDiv = styled.div<DivProps>`
   position: absolute;
   left: 15.5%;
   bottom: 32%;
-  border: ${(props) => (props.hotdogIsFound ? "5px solid black" : "none")};
+  border: ${(props) => (props.hotdogIsFound ? "5px solid #f2c205" : "none")};
   border-radius: 5px;
 `;
 const IlovenyDiv = styled.div<DivProps>`
@@ -161,7 +158,7 @@ const IlovenyDiv = styled.div<DivProps>`
   position: absolute;
   left: 46%;
   bottom: 42%;
-  border: ${(props) => (props.ilovenyIsFound ? "5px solid black" : "none")};
+  border: ${(props) => (props.ilovenyIsFound ? "5px solid #f2c205" : "none")};
   border-radius: 5px;
 `;
 const PoliceDiv = styled.div<DivProps>`
@@ -170,6 +167,6 @@ const PoliceDiv = styled.div<DivProps>`
   position: absolute;
   left: 52%;
   bottom: 61%;
-  border: ${(props) => (props.policeIsFound ? "5px solid black" : "none")};
+  border: ${(props) => (props.policeIsFound ? "5px solid #f2c205" : "none")};
   border-radius: 5px;
 `;

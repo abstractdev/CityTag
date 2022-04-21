@@ -31,6 +31,7 @@ export function Rio(props: CityProps) {
     setClickHistory,
     handleMouseClickPosition,
     checkFirebaseForMatch,
+    dropdownIsShifted,
   } = props;
   const dancerText = "Dancer";
   const flagText = "Flag";
@@ -38,7 +39,7 @@ export function Rio(props: CityProps) {
   const tambourineText = "Tambourine";
   return (
     <>
-      <RioContainer>
+      <VFlexContainer>
         <RioFind
           dancerText={dancerText}
           flagText={flagText}
@@ -87,9 +88,10 @@ export function Rio(props: CityProps) {
             setFlagIsFound={setFlagIsFound}
             setSoccerIsFound={setSoccerIsFound}
             setTambourineIsFound={setTambourineIsFound}
+            dropdownIsShifted={dropdownIsShifted}
           />
         </CityImageContainer>
-      </RioContainer>
+      </VFlexContainer>
     </>
   );
 }
@@ -101,9 +103,7 @@ interface DivProps {
   soccerIsFound?: boolean;
   tambourineIsFound?: boolean;
 }
-const RioContainer = styled(VFlexContainer)`
-  background-color: #00ad73;
-`;
+
 const DancerDiv = styled.div<DivProps>`
   width: 5%;
   height: 12%;

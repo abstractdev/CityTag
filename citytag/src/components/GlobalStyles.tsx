@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
-import sky from "../assets/fonts/Skyfont-NonCommercial.otf"
-import metropolis from "../assets/fonts/metropolis.regular.otf"
-import city from "../assets/fonts/CityStencil.ttf"
+import sky from "../assets/fonts/Skyfont-NonCommercial.otf";
+import metropolis from "../assets/fonts/metropolis.regular.otf";
+import city from "../assets/fonts/CityStencil.ttf";
 
 export const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -35,6 +35,7 @@ body {
   height: 100vh;
 	background-color: #121212;
 	overflow-x: hidden;
+	font-family: 'metropolis'
 }
 #root {
 	max-width: 100%;
@@ -70,4 +71,4 @@ table {
   font-family: 'city';
   src: local('city'), url(${city});
 }
-`
+`;

@@ -21,7 +21,7 @@ import { FindProps } from "../Interfaces";
 export function NewYorkFind(props: FindProps) {
   return (
     <>
-      <FindContainerNewYork>
+      <FindContainer>
         <FindImageContainer
           style={props.broadwayIsFound ? { opacity: "30%" } : {}}
         >
@@ -46,14 +46,14 @@ export function NewYorkFind(props: FindProps) {
           <FindImage src={police} />
           {props.policeText}
         </FindImageContainer>
-      </FindContainerNewYork>
+      </FindContainer>
     </>
   );
 }
 export function RioFind(props: FindProps) {
   return (
     <>
-      <FindContainerRio>
+      <FindContainer>
         <FindImageContainer>
           <FindImage src={dancer} />
           {props.dancerText}
@@ -70,55 +70,55 @@ export function RioFind(props: FindProps) {
           <FindImage src={tambourine} />
           {props.tambourineText}
         </FindImageContainer>
-      </FindContainerRio>
+      </FindContainer>
     </>
   );
 }
-export function TokyoFind() {
+export function TokyoFind(props: FindProps) {
   return (
     <>
-      <FindContainerTokyo>
+      <FindContainer>
         <FindImageContainer>
           <FindImage src={geisha} />
-          Geisha
+          {props.geishaText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={parasol} />
-          Parasol
+          {props.parasolText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={sushi} />
-          Sushi
+          {props.sushiText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={sumo} />
-          Sumo Wrestler
+          {props.sumoText}
         </FindImageContainer>
-      </FindContainerTokyo>
+      </FindContainer>
     </>
   );
 }
-export function ParisFind() {
+export function ParisFind(props: FindProps) {
   return (
     <>
-      <FindContainerParis>
+      <FindContainer>
         <FindImageContainer>
           <FindImage src={brie} />
-          Brie
+          {props.brieText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={fleurdelis} />
-          Fleur De Lis
+          {props.fleurdelisText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={monalisa} />
-          Mona Lisa
+          {props.monalisaText}
         </FindImageContainer>
         <FindImageContainer>
           <FindImage src={tophat} />
-          Tophat
+          {props.tophatText}
         </FindImageContainer>
-      </FindContainerParis>
+      </FindContainer>
     </>
   );
 }
@@ -130,21 +130,8 @@ const FindContainer = styled.div`
   align-items: center;
   text-align: center;
   height: auto;
-  color: 121212;
+  color: #fff;
   font-family: "metropolis";
-`;
-
-const FindContainerNewYork = styled(FindContainer)`
-  background-color: #f2c205;
-`;
-const FindContainerRio = styled(FindContainer)`
-  background-color: #00ad73;
-`;
-const FindContainerTokyo = styled(FindContainer)`
-  background-color: #d78ebf;
-`;
-const FindContainerParis = styled(FindContainer)`
-  background-color: #f8480f;
 `;
 
 const FindImageContainer = styled(VFlexContainer)`
