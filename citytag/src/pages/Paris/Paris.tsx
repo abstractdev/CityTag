@@ -4,11 +4,13 @@ import { VFlexContainer } from "../../styles/VFlexContainer.styles";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { CityImage } from "../../styles/CityImage.styles";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ParisDropdown } from "./ParisDropdown";
-// import { setDoc, doc } from "firebase/firestore";
-// import { db } from "../../components/Firebase";
+import { setDoc, doc, collection } from "firebase/firestore";
+import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
+import { AudioFunctions } from "../../UtlityFunctions";
+import { convertMsToDisplayTime } from "../../UtlityFunctions";
 
 export function Paris(props: CityProps) {
   const {
@@ -38,6 +40,44 @@ export function Paris(props: CityProps) {
   const fleurdelisText = "Fleur De Lis";
   const monalisaText = "Mona lisa";
   const tophatText = "Tophat";
+
+  const [userId, setUserId] = useState("")
+  
+  useEffect(() => {
+   setIsActive(true);
+    let interval: NodeJS.Timer;
+    if (isActive) {
+
+      const docRef = doc(collection(db, "parisUsers"));
+      setDoc(docRef,{id: docRef.id})
+      console.log("Document written");
+      setUserId(docRef.id);
+
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, 'parisUsers', userId);
+      setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  useEffect(() => {
+    if (brieIsFound && fleurdelisIsFound && monalisaIsFound && tophatIsFound) {
+      setIsActive(false);
+      setTimeout(() => {
+        AudioFunctions().end.play();
+      }, 600);
+    }
+  }, [
+    brieIsFound,
+    fleurdelisIsFound,
+    monalisaIsFound,
+    tophatIsFound,
+    setIsActive,
+  ]);
   return (
     <>
       <VFlexContainer>
@@ -109,43 +149,47 @@ const BrieDiv = styled.div<DivProps>`
   width: 2.5%;
   height: 4.3%;
   position: absolute;
-  border: 5px solid #f94910;
   left: 53.4%;
   bottom: 60%;
-  /* border: ${(props) =>
-    props.brieIsFound ? "5px solid #f94910" : "none"}; */
+  border: ${(props) =>
+    props.brieIsFound ? "5px solid #f94910" : "none"};
+  outline: ${(props) =>
+    props.brieIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const FleurdelisDiv = styled.div<DivProps>`
   width: 3%;
   height: 4.8%;
   position: absolute;
-  border: 5px solid #f94910;
   left: 66.4%;
   bottom: 95.2%;
-  /* border: ${(props) =>
-    props.fleurdelisIsFound ? "5px solid #f94910" : "none"}; */
+  border: ${(props) =>
+    props.fleurdelisIsFound ? "5px solid #f94910" : "none"};
+  outline: ${(props) =>
+    props.fleurdelisIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const MonalisaDiv = styled.div<DivProps>`
   width: 4%;
   height: 8.7%;
   position: absolute;
-  border: 5px solid #f94910;
   left: 77.5%;
   bottom: 54.5%;
-  /* border: ${(props) =>
-    props.monalisaIsFound ? "5px solid #f94910" : "none"}; */
+  border: ${(props) =>
+    props.monalisaIsFound ? "5px solid #f94910" : "none"};
+  outline: ${(props) =>
+    props.monalisaIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const TophatDiv = styled.div<DivProps>`
   width: 2.7%;
   height: 4.4%;
   position: absolute;
-  border: 5px solid #f94910;
   left: 77.4%;
   bottom: 9.3%;
-  /* border: ${(props) =>
-    props.tophatIsFound ? "5px solid #f94910" : "none"}; */
+  border: ${(props) =>
+    props.tophatIsFound ? "5px solid #f94910" : "none"};
+  outline: ${(props) =>
+    props.tophatIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;

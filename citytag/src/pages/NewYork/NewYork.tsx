@@ -5,10 +5,12 @@ import { CityImage } from "../../styles/CityImage.styles";
 import { NewYorkFind } from "../../components/Find";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { NewYorkDropdown } from "./NewYorkDropdown";
-import { useEffect } from "react";
-// import { setDoc, doc } from "firebase/firestore";
-// import { db } from "../../components/Firebase";
+import { useEffect, useState } from "react";
+import { setDoc, doc, collection } from "firebase/firestore";
+import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
+import { convertMsToDisplayTime } from "../../UtlityFunctions";
+import { AudioFunctions } from "../../UtlityFunctions";
 
 export function NewYork(props: CityProps) {
   const {
@@ -37,28 +39,35 @@ export function NewYork(props: CityProps) {
   const ilovenyText = "I Love NY Shirt";
   const policeText = "NYPD Officer";
 
-  // useEffect(() => {
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
+  const [userId, setUserId] = useState("")
+  
+  useEffect(() => {
+   setIsActive(true);
+    let interval: NodeJS.Timer;
+    if (isActive) {
 
-  //     const docRef = doc(db, "nyUsers", id);
-  //     setDoc(docRef,{id: id})
-  //     console.log("Document written");
+      const docRef = doc(collection(db, "nyUsers"));
+      setDoc(docRef,{id: docRef.id})
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, 'nyUsers', id);
-  //     setDoc(userRef, { time: time }, { merge: true });
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, 'nyUsers', userId);
+      setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound) {
       setIsActive(false);
+      setTimeout(() => {
+        AudioFunctions().end.play();
+      }, 600);
     }
   }, [
     broadwayIsFound,
@@ -141,8 +150,10 @@ const BroadwayDiv = styled.div<DivProps>`
   left: 53.5%;
   bottom: 84.2%;
   border: ${(props) => (props.broadwayIsFound ? "5px solid #f2c205" : "none")};
+  outline: ${(props) => (props.broadwayIsFound ? "3px solid #121212;" : "none")};
   border-radius: 5px;
 `;
+
 const HotdogDiv = styled.div<DivProps>`
   width: 3%;
   height: 9%;
@@ -150,6 +161,7 @@ const HotdogDiv = styled.div<DivProps>`
   left: 15.5%;
   bottom: 32%;
   border: ${(props) => (props.hotdogIsFound ? "5px solid #f2c205" : "none")};
+  outline: ${(props) => (props.hotdogIsFound ? "3px solid #121212;" : "none")};
   border-radius: 5px;
 `;
 const IlovenyDiv = styled.div<DivProps>`
@@ -159,6 +171,7 @@ const IlovenyDiv = styled.div<DivProps>`
   left: 46%;
   bottom: 42%;
   border: ${(props) => (props.ilovenyIsFound ? "5px solid #f2c205" : "none")};
+  outline: ${(props) => (props.ilovenyIsFound ? "3px solid #121212;" : "none")};
   border-radius: 5px;
 `;
 const PoliceDiv = styled.div<DivProps>`
@@ -168,5 +181,6 @@ const PoliceDiv = styled.div<DivProps>`
   left: 52%;
   bottom: 61%;
   border: ${(props) => (props.policeIsFound ? "5px solid #f2c205" : "none")};
+  outline: ${(props) => (props.policeIsFound ? "3px solid #121212;" : "none")};
   border-radius: 5px;
 `;

@@ -4,11 +4,13 @@ import { CityImageContainer } from "../../styles/CityImage.styles";
 import { CityImage } from "../../styles/CityImage.styles";
 import { RioFind } from "../../components/Find";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RioDropdown } from "./RioDropdown";
-// import { setDoc, doc } from "firebase/firestore";
-// import { db } from "../../components/Firebase";
+import { setDoc, doc, collection } from "firebase/firestore";
+import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
+import { AudioFunctions } from "../../UtlityFunctions";
+import { convertMsToDisplayTime } from "../../UtlityFunctions";
 
 export function Rio(props: CityProps) {
   const {
@@ -37,6 +39,43 @@ export function Rio(props: CityProps) {
   const flagText = "Flag";
   const soccerText = "Soccer Ball";
   const tambourineText = "Tambourine";
+  const [userId, setUserId] = useState("")
+  
+  // useEffect(() => {
+  //  setIsActive(true);
+  //   let interval: NodeJS.Timer;
+  //   if (isActive) {
+
+  //     const docRef = doc(collection(db, "rioUsers"));
+  //     setDoc(docRef,{id: docRef.id})
+  //     console.log("Document written");
+  //     setUserId(docRef.id);
+
+  //     interval = setInterval(() => {
+  //       setTime((prev) => prev + 10);
+  //     }, 10);
+  //   } else if (!isActive) {
+  //     clearInterval(interval);
+  //     const userRef = doc(db, 'rioUsers', userId);
+  //     setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isActive]);
+  
+  useEffect(() => {
+    if (dancerIsFound && flagIsFound && soccerIsFound && tambourineIsFound) {
+      setIsActive(false);
+      setTimeout(() => {
+        AudioFunctions().end.play();
+      }, 600);
+    }
+  }, [
+    dancerIsFound,
+    flagIsFound,
+    soccerIsFound,
+    tambourineIsFound,
+    setIsActive,
+  ]);
   return (
     <>
       <VFlexContainer>
@@ -108,11 +147,12 @@ const DancerDiv = styled.div<DivProps>`
   width: 5%;
   height: 12%;
   position: absolute;
-  border: 5px solid #00ad73;
   left: 77.3%;
   bottom: 52%;
-  /* border: ${(props) =>
-    props.dancerIsFound ? "5px solid #00ad73" : "none"}; */
+  border: ${(props) =>
+    props.dancerIsFound ? "5px solid #00ad73" : "none"};
+  outline: ${(props) =>
+    props.dancerIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const FlagDiv = styled.div<DivProps>`
@@ -120,10 +160,13 @@ const FlagDiv = styled.div<DivProps>`
   height: 7%;
   position: absolute;
   border: 5px solid #00ad73;
+  outline: 3px solid #121212;
   left: 13.8%;
   bottom: 32%;
-  /* border: ${(props) =>
-    props.flagIsFound ? "5px solid #00ad73" : "none"}; */
+  border: ${(props) =>
+    props.flagIsFound ? "5px solid #00ad73" : "none"};
+  outline: ${(props) =>
+    props.flagIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const SoccerDiv = styled.div<DivProps>`
@@ -131,10 +174,13 @@ const SoccerDiv = styled.div<DivProps>`
   height: 4%;
   position: absolute;
   border: 5px solid #00ad73;
+  outline: 3px solid #121212;
   left: 57.2%;
   bottom: 10%;
-  /* border: ${(props) =>
-    props.soccerIsFound ? "5px solid #00ad73" : "none"}; */
+  border: ${(props) =>
+    props.soccerIsFound ? "5px solid #00ad73" : "none"};
+  outline: ${(props) =>
+    props.soccerIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
 const TambourineDiv = styled.div<DivProps>`
@@ -142,9 +188,12 @@ const TambourineDiv = styled.div<DivProps>`
   height: 7.3%;
   position: absolute;
   border: 5px solid #00ad73;
+  outline: 3px solid #121212;
   left: 52.5%;
   bottom: 71.8%;
-  /* border: ${(props) =>
-    props.tambourineIsFound ? "5px solid #00ad73" : "none"}; */
+  border: ${(props) =>
+    props.tambourineIsFound ? "5px solid #00ad73" : "none"};
+  outline: ${(props) =>
+    props.tambourineIsFound ? "3px solid #121212" : "none"};
   border-radius: 5px;
 `;
