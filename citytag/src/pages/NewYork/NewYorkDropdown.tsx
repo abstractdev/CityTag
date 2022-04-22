@@ -3,6 +3,7 @@ import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
 import { DropdownLi } from "../../styles/Dropdown.styles";
+import { AudioFunctions } from "../../UtlityFunctions";
 
 export function NewYorkDropdown(props: DropdownProps) {
   const {
@@ -30,20 +31,26 @@ export function NewYorkDropdown(props: DropdownProps) {
       switch (event.target.dataset.id) {
         case "broadway":
           setBroadwayIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "hotdog":
           setHotdogIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "iloveny":
           setIlovenyIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "police":
           setPoliceIsFound(true);
+          AudioFunctions().right.play();
           break;
         default:
           break;
       }
       handleSetClickHistory(event);
+    } else {
+      AudioFunctions().wrong.play();
     }
   }
 
@@ -105,15 +112,14 @@ export function NewYorkDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxNewYork = styled(TargetBox)`
-  border: 8px solid #f2c205;
+  border: 8px solid ${({ theme }) => theme.colors.newyork};
 `;
 
 const DropdownContainerNewYork = styled(DropdownContainer)`
-  /* border: 5px solid #f2c205; */
-  background-color: #f2c205;
-  color: #121212;
+  /* border: 5px solid ${({ theme }) => theme.colors.newyork}; */
+  background-color: ${({ theme }) => theme.colors.newyork};
 `;
 
 const DropdownLiNewYork = styled(DropdownLi)`
-  background-color: #f2c205;
+  background-color: ${({ theme }) => theme.colors.newyork};
 `;

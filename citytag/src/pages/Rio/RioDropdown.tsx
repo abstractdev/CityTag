@@ -3,6 +3,7 @@ import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
 import { DropdownLi } from "../../styles/Dropdown.styles";
+import { AudioFunctions } from "../../UtlityFunctions";
 
 export function RioDropdown(props: DropdownProps) {
   const {
@@ -34,20 +35,26 @@ export function RioDropdown(props: DropdownProps) {
       switch (event.target.dataset.id) {
         case "dancer":
           setDancerIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "flag":
           setFlagIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "soccer":
           setSoccerIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "tambourine":
           setTambourineIsFound(true);
+          AudioFunctions().right.play();
           break;
         default:
           break;
       }
       handleSetClickHistory(event);
+    }else {
+      AudioFunctions().wrong.play();
     }
   }
 
@@ -113,15 +120,15 @@ export function RioDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxRio = styled(TargetBox)`
-  border: 8px solid #00ad73;
+  border: 8px solid ${({ theme }) => theme.colors.rio};
 `;
 
 const DropdownContainerRio = styled(DropdownContainer)`
-  /* border: 5px dotted #00ad73; */
-  background-color: #00ad73;
+  /* border: 5px dotted ${({ theme }) => theme.colors.rio}; */
+  background-color: ${({ theme }) => theme.colors.rio};
   width: 96px;
 `;
 
 const DropdownLiRio = styled(DropdownLi)`
-  background-color: #00ad73;
+  background-color: ${({ theme }) => theme.colors.rio};
 `;

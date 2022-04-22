@@ -3,6 +3,7 @@ import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
 import { DropdownLi } from "../../styles/Dropdown.styles";
+import { AudioFunctions } from "../../UtlityFunctions";
 
 export function TokyoDropdown(props: DropdownProps) {
   const {
@@ -34,20 +35,26 @@ export function TokyoDropdown(props: DropdownProps) {
       switch (event.target.dataset.id) {
         case "geisha":
           setGeishaIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "parasol":
           setParasolIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "sushi":
           setSushiIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "sumo":
           setSumoIsFound(true);
+          AudioFunctions().right.play();
           break;
         default:
           break;
       }
       handleSetClickHistory(event);
+    }else {
+      AudioFunctions().wrong.play();
     }
   }
 
@@ -113,15 +120,15 @@ export function TokyoDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxTokyo = styled(TargetBox)`
-  border: 8px solid #d78ebf;
+  border: 8px solid ${({ theme }) => theme.colors.tokyo};
 `;
 
 const DropdownContainerTokyo = styled(DropdownContainer)`
-  /* border: 5px dotted #d78ebf; */
-  background-color: #d78ebf;
+  /* border: 5px dotted ${({ theme }) => theme.colors.tokyo}; */
+  background-color: ${({ theme }) => theme.colors.tokyo};
   width: 118px;
 `;
 
 const DropdownLiTokyo = styled(DropdownLi)`
-  background-color: #d78ebf;
+  background-color: ${({ theme }) => theme.colors.tokyo};
 `;

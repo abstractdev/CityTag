@@ -3,6 +3,7 @@ import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
 import { DropdownLi } from "../../styles/Dropdown.styles";
+import { AudioFunctions } from "../../UtlityFunctions";
 
 export function ParisDropdown(props: DropdownProps) {
   const {
@@ -33,20 +34,26 @@ export function ParisDropdown(props: DropdownProps) {
       switch (event.target.dataset.id) {
         case "brie":
           setBrieIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "fleurdelis":
           setFleurdelisIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "monalisa":
           setMonalisaIsFound(true);
+          AudioFunctions().right.play();
           break;
         case "tophat":
           setTophatIsFound(true);
+          AudioFunctions().right.play();
           break;
         default:
           break;
       }
       handleSetClickHistory(event);
+    }else {
+      AudioFunctions().wrong.play();
     }
   }
 
@@ -112,15 +119,15 @@ export function ParisDropdown(props: DropdownProps) {
 
 //STYLED COMPONENTS//
 const TargetBoxParis = styled(TargetBox)`
-  border: 8px solid #f94910;
+  border: 8px solid ${({ theme }) => theme.colors.paris};
 `;
 
 const DropdownContainerParis = styled(DropdownContainer)`
-  /* border: 5px dotted #f94910; */
-  background-color: #f94910;
+  /* border: 5px dotted ${({ theme }) => theme.colors.paris}; */
+  background-color: ${({ theme }) => theme.colors.paris};
   width: 118px;
 `;
 
 const DropdownLiParis = styled(DropdownLi)`
-  background-color: #f94910;
+  background-color: ${({ theme }) => theme.colors.paris};
 `;
