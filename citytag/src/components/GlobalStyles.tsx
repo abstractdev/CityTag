@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import sky from "../assets/fonts/Skyfont-NonCommercial.otf";
 import metropolis from "../assets/fonts/metropolis.regular.otf";
 import city from "../assets/fonts/CityStencil.ttf";
+import metropolisB from "../assets/fonts/metropolis.black.otf"
 
 export const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -70,5 +71,9 @@ table {
 @font-face {
   font-family: 'city';
   src: local('city'), url(${city});
+}
+@font-face {
+	font-family: 'metropolisB';
+  src: local('metropolisB'), url(${metropolisB});
 }
 `;

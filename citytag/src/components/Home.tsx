@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { HomeProps } from "../Interfaces";
 
 export function Home(props: HomeProps) {
-  const {setIsActive} = props;
+  const { setIsActive } = props;
   return (
     <>
       <HomeContainer>
