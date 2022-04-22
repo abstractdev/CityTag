@@ -13,7 +13,7 @@ export function Header(props: headerProps) {
       <StyledHeaderTextContainer>
         <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
       </StyledHeaderTextContainer>
-      <Timer time={props.time} isActive={props.isActive} />
+      {props.isActive && <Timer time={props.time} isActive={props.isActive} />}
       <LeaderboardLinkContainer>
         <LeaderboardLink to={"/leaderboard"}>Leaderboard</LeaderboardLink>
       </LeaderboardLinkContainer>
