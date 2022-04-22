@@ -20,8 +20,7 @@ const theme = {
     newyork: "#f2c205",
     paris: "#f94910",
     rio: "#00ad73",
-    tokyo: "#d78ebf"
-    
+    tokyo: "#d78ebf",
   },
 };
 function App() {
@@ -96,7 +95,7 @@ function App() {
         <GlobalStyles />
         <Header time={time} isActive={isActive} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setIsActive={setIsActive} />} />
           {/* <Route path="/leaderboard" element={} /> */}
           <Route
             path="/newyork"

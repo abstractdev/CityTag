@@ -1,27 +1,28 @@
-import React from "react";
 import ny from "../assets/images/ny/ny.jpg";
 import rio from "../assets/images/rio/rio.jpg";
 import tokyo from "../assets/images/tokyo/tokyo.jpg";
 import paris from "../assets/images/paris/paris.jpg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { HomeProps } from "../Interfaces";
 
-export function Home() {
+export function Home(props: HomeProps) {
+  const {setIsActive} = props;
   return (
     <>
       <HomeContainer>
         <HomeText>Choose a city</HomeText>
         <HomeContent>
-          <Link to="newyork">
+          <Link to="newyork" onClick={() => setIsActive(true)}>
             <HomeNy />
           </Link>
-          <Link to="rio">
+          <Link to="rio" onClick={() => setIsActive(true)}>
             <HomeRio />
           </Link>
-          <Link to="tokyo">
+          <Link to="tokyo" onClick={() => setIsActive(true)}>
             <HomeTokyo />
           </Link>
-          <Link to="paris">
+          <Link to="paris" onClick={() => setIsActive(true)}>
             <HomeParis />
           </Link>
         </HomeContent>
