@@ -6,13 +6,13 @@ export const TargetBox = styled.div`
   height: 50px;
   position: absolute;
   border-radius: 50%;
-  outline: 3px solid #121212;
+  outline: 3px solid ${({ theme }) => theme.colors.main};
 `;
 
 export const DropdownContainer = styled(VFlexContainer)`
   width: 132px;
   height: 100px;
-  border: 3px solid #121212;
+  border: 3px solid ${({ theme }) => theme.colors.main};
   border-radius: 5px;
   position: absolute;
   display: flex;

@@ -10,7 +10,7 @@ export function Home() {
   return (
     <>
       <HomeContainer>
-        <HomeText>Choose your city</HomeText>
+        <HomeText>Choose a city</HomeText>
         <HomeContent>
           <Link to="newyork">
             <HomeNy />

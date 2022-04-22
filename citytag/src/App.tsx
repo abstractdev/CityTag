@@ -15,7 +15,13 @@ import { db } from "./components/Firebase";
 const theme = {
   colors: {
     header: "#121212",
-    footer: "#121212",
+    footer: "#FFF",
+    main: "#121212",
+    newyork: "#f2c205",
+    paris: "#f94910",
+    rio: "#00ad73",
+    tokyo: "#d78ebf"
+    
   },
 };
 function App() {
@@ -24,7 +30,7 @@ function App() {
   const [imageIsClicked, setImageIsClicked] = useState(false);
   const [clickHistory, setClickHistory] = useState([]);
   const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [broadwayIsFound, setBroadwayIsFound] = useState(false);
   const [hotdogIsFound, setHotdogIsFound] = useState(false);
   const [ilovenyIsFound, setIlovenyIsFound] = useState(false);

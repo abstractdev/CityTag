@@ -17,7 +17,7 @@ const StyledFooterContainer = styled.div`
   /* width: 100%; */
   display: flex;
   align-content: center;
-  background-color: #FFF;
+  background-color: ${({ theme }) => theme.colors.footer};
   padding: .5rem .75rem;
   font-size: 70%;
   @media screen and (max-width: 644px) {
