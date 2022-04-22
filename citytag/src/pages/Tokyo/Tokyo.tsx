@@ -11,6 +11,8 @@ import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
+import { DivProps } from "../../Interfaces";
+import { ErrorSpan } from "../../components/ErrorSpan";
 
 export function Tokyo(props: CityProps) {
   const {
@@ -34,6 +36,8 @@ export function Tokyo(props: CityProps) {
     setSushiIsFound,
     setSumoIsFound,
     dropdownIsShifted,
+    errorSpanIsVisible,
+    handleErrorSpan,
   } = props;
 
   const geishaText = "Geisha";
@@ -41,8 +45,8 @@ export function Tokyo(props: CityProps) {
   const sushiText = "Sushi";
   const sumoText = "Sumo Wrestler";
 
-  const [userId, setUserId] = useState("")
-  
+  const [userId, setUserId] = useState("");
+
   // useEffect(() => {
   //  setIsActive(true);
   //   let interval: NodeJS.Timer;
@@ -69,15 +73,9 @@ export function Tokyo(props: CityProps) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 600);
+      }, 800);
     }
-  }, [
-    geishaIsFound,
-    parasolIsFound,
-    sushiIsFound,
-    sumoIsFound,
-    setIsActive,
-  ]);
+  }, [geishaIsFound, parasolIsFound, sushiIsFound, sumoIsFound, setIsActive]);
 
   return (
     <>
@@ -96,6 +94,7 @@ export function Tokyo(props: CityProps) {
           onClick={(event) => handleMouseClickPosition(event)}
         >
           <CityImage src={tokyo} />
+          {errorSpanIsVisible && <ErrorSpan />}
           <GeishaDiv
             geishaIsFound={geishaIsFound}
             data-id="geishaDiv"
@@ -131,6 +130,7 @@ export function Tokyo(props: CityProps) {
             setSushiIsFound={setSushiIsFound}
             setSumoIsFound={setSumoIsFound}
             dropdownIsShifted={dropdownIsShifted}
+            handleErrorSpan={handleErrorSpan}
           />
         </CityImageContainer>
       </VFlexContainer>
@@ -139,12 +139,6 @@ export function Tokyo(props: CityProps) {
 }
 
 //STYLED COMPONENTS//
-interface DivProps {
-  geishaIsFound?: boolean;
-  parasolIsFound?: boolean;
-  sushiIsFound?: boolean;
-  sumoIsFound?: boolean;
-}
 
 const GeishaDiv = styled.div<DivProps>`
   width: 4.5%;
@@ -152,10 +146,8 @@ const GeishaDiv = styled.div<DivProps>`
   position: absolute;
   left: 61.1%;
   bottom: 59.2%;
-  border: ${(props) =>
-    props.geishaIsFound ? "5px solid #d78ebf" : "none"};
-  outline: ${(props) =>
-    props.geishaIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.geishaIsFound ? "5px solid #d78ebf" : "none")};
+  outline: ${(props) => (props.geishaIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const ParasolDiv = styled.div<DivProps>`
@@ -164,10 +156,8 @@ const ParasolDiv = styled.div<DivProps>`
   position: absolute;
   left: 29.2%;
   bottom: 76%;
-  border: ${(props) =>
-    props.parasolIsFound ? "5px solid #d78ebf" : "none"};
-  outline: ${(props) =>
-    props.parasolIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.parasolIsFound ? "5px solid #d78ebf" : "none")};
+  outline: ${(props) => (props.parasolIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const SushiDiv = styled.div<DivProps>`
@@ -176,10 +166,8 @@ const SushiDiv = styled.div<DivProps>`
   position: absolute;
   left: 56.3%;
   bottom: 92%;
-  border: ${(props) =>
-    props.sushiIsFound ? "5px solid #d78ebf" : "none"};
-  outline: ${(props) =>
-    props.sushiIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.sushiIsFound ? "5px solid #d78ebf" : "none")};
+  outline: ${(props) => (props.sushiIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const SumoDiv = styled.div<DivProps>`
@@ -188,9 +176,7 @@ const SumoDiv = styled.div<DivProps>`
   position: absolute;
   left: 82.4%;
   bottom: 17.5%;
-  border: ${(props) =>
-    props.sumoIsFound ? "5px solid #d78ebf" : "none"};
-  outline: ${(props) =>
-    props.sumoIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.sumoIsFound ? "5px solid #d78ebf" : "none")};
+  outline: ${(props) => (props.sumoIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;

@@ -11,6 +11,8 @@ import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { AudioFunctions } from "../../UtlityFunctions";
+import { DivProps } from "../../Interfaces";
+import { ErrorSpan } from "../../components/ErrorSpan";
 
 export function NewYork(props: CityProps) {
   const {
@@ -33,41 +35,45 @@ export function NewYork(props: CityProps) {
     setClickHistory,
     handleMouseClickPosition,
     checkFirebaseForMatch,
+    errorSpanIsVisible,
+    handleErrorSpan,
   } = props;
   const broadwayText = "Broadway Sign";
   const hotdogText = "Hot Dog Vendor";
   const ilovenyText = "I Love NY Shirt";
   const policeText = "NYPD Officer";
 
-  const [userId, setUserId] = useState("")
-  
-  useEffect(() => {
-   setIsActive(true);
-    let interval: NodeJS.Timer;
-    if (isActive) {
+  const [userId, setUserId] = useState("");
 
-      const docRef = doc(collection(db, "nyUsers"));
-      setDoc(docRef,{id: docRef.id})
-      console.log("Document written");
-      setUserId(docRef.id);
+  // useEffect(() => {
+  //   let interval: NodeJS.Timer;
+  //   if (isActive) {
+  //     const docRef = doc(collection(db, "nyUsers"));
+  //     setDoc(docRef, { id: docRef.id });
+  //     console.log("Document written");
+  //     setUserId(docRef.id);
 
-      interval = setInterval(() => {
-        setTime((prev) => prev + 10);
-      }, 10);
-    } else if (!isActive) {
-      clearInterval(interval);
-      const userRef = doc(db, 'nyUsers', userId);
-      setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
-    }
-    return () => clearInterval(interval);
-  }, [isActive]);
+  //     interval = setInterval(() => {
+  //       setTime((prev) => prev + 10);
+  //     }, 10);
+  //   } else if (!isActive) {
+  //     clearInterval(interval);
+  //     const userRef = doc(db, "nyUsers", userId);
+  //     setDoc(
+  //       userRef,
+  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+  //       { merge: true }
+  //     );
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isActive]);
 
   useEffect(() => {
     if (broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 600);
+      }, 800);
     }
   }, [
     broadwayIsFound,
@@ -94,6 +100,7 @@ export function NewYork(props: CityProps) {
           onClick={(event) => handleMouseClickPosition(event)}
         >
           <CityImage src={ny} />
+          {errorSpanIsVisible && <ErrorSpan />}
           <BroadwayDiv
             broadwayIsFound={broadwayIsFound}
             data-id="broadwayDiv"
@@ -128,6 +135,7 @@ export function NewYork(props: CityProps) {
             setHotdogIsFound={setHotdogIsFound}
             setIlovenyIsFound={setIlovenyIsFound}
             setPoliceIsFound={setPoliceIsFound}
+            handleErrorSpan={handleErrorSpan}
           />
         </CityImageContainer>
       </VFlexContainer>
@@ -136,12 +144,6 @@ export function NewYork(props: CityProps) {
 }
 
 //STYLED COMPONENTS//
-interface DivProps {
-  broadwayIsFound?: boolean;
-  hotdogIsFound?: boolean;
-  ilovenyIsFound?: boolean;
-  policeIsFound?: boolean;
-}
 
 const BroadwayDiv = styled.div<DivProps>`
   width: 7%;
@@ -150,7 +152,8 @@ const BroadwayDiv = styled.div<DivProps>`
   left: 53.5%;
   bottom: 84.2%;
   border: ${(props) => (props.broadwayIsFound ? "5px solid #f2c205" : "none")};
-  outline: ${(props) => (props.broadwayIsFound ? "3px solid #121212;" : "none")};
+  outline: ${(props) =>
+    props.broadwayIsFound ? "3px solid #121212;" : "none"};
   border-radius: 5px;
 `;
 

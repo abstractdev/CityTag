@@ -11,6 +11,8 @@ import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
+import { DivProps } from "../../Interfaces";
+import { ErrorSpan } from "../../components/ErrorSpan";
 
 export function Rio(props: CityProps) {
   const {
@@ -34,13 +36,15 @@ export function Rio(props: CityProps) {
     handleMouseClickPosition,
     checkFirebaseForMatch,
     dropdownIsShifted,
+    errorSpanIsVisible,
+    handleErrorSpan,
   } = props;
   const dancerText = "Dancer";
   const flagText = "Flag";
   const soccerText = "Soccer Ball";
   const tambourineText = "Tambourine";
-  const [userId, setUserId] = useState("")
-  
+  const [userId, setUserId] = useState("");
+
   // useEffect(() => {
   //  setIsActive(true);
   //   let interval: NodeJS.Timer;
@@ -61,13 +65,13 @@ export function Rio(props: CityProps) {
   //   }
   //   return () => clearInterval(interval);
   // }, [isActive]);
-  
+
   useEffect(() => {
     if (dancerIsFound && flagIsFound && soccerIsFound && tambourineIsFound) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 600);
+      }, 800);
     }
   }, [
     dancerIsFound,
@@ -93,6 +97,7 @@ export function Rio(props: CityProps) {
           onClick={(event) => handleMouseClickPosition(event)}
         >
           <CityImage src={rio} />
+          {errorSpanIsVisible && <ErrorSpan />}
           <DancerDiv
             dancerIsFound={dancerIsFound}
             data-id="dancerDiv"
@@ -128,6 +133,8 @@ export function Rio(props: CityProps) {
             setSoccerIsFound={setSoccerIsFound}
             setTambourineIsFound={setTambourineIsFound}
             dropdownIsShifted={dropdownIsShifted}
+            errorSpanIsVisible={errorSpanIsVisible}
+            handleErrorSpan={handleErrorSpan}
           />
         </CityImageContainer>
       </VFlexContainer>
@@ -136,12 +143,6 @@ export function Rio(props: CityProps) {
 }
 
 //STYLED COMPONENTS//
-interface DivProps {
-  dancerIsFound?: boolean;
-  flagIsFound?: boolean;
-  soccerIsFound?: boolean;
-  tambourineIsFound?: boolean;
-}
 
 const DancerDiv = styled.div<DivProps>`
   width: 5%;
@@ -149,10 +150,8 @@ const DancerDiv = styled.div<DivProps>`
   position: absolute;
   left: 77.3%;
   bottom: 52%;
-  border: ${(props) =>
-    props.dancerIsFound ? "5px solid #00ad73" : "none"};
-  outline: ${(props) =>
-    props.dancerIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.dancerIsFound ? "5px solid #00ad73" : "none")};
+  outline: ${(props) => (props.dancerIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const FlagDiv = styled.div<DivProps>`
@@ -163,10 +162,8 @@ const FlagDiv = styled.div<DivProps>`
   outline: 3px solid #121212;
   left: 13.8%;
   bottom: 32%;
-  border: ${(props) =>
-    props.flagIsFound ? "5px solid #00ad73" : "none"};
-  outline: ${(props) =>
-    props.flagIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.flagIsFound ? "5px solid #00ad73" : "none")};
+  outline: ${(props) => (props.flagIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const SoccerDiv = styled.div<DivProps>`
@@ -177,10 +174,8 @@ const SoccerDiv = styled.div<DivProps>`
   outline: 3px solid #121212;
   left: 57.2%;
   bottom: 10%;
-  border: ${(props) =>
-    props.soccerIsFound ? "5px solid #00ad73" : "none"};
-  outline: ${(props) =>
-    props.soccerIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.soccerIsFound ? "5px solid #00ad73" : "none")};
+  outline: ${(props) => (props.soccerIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const TambourineDiv = styled.div<DivProps>`

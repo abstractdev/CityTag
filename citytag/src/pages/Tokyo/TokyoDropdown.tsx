@@ -21,6 +21,7 @@ export function TokyoDropdown(props: DropdownProps) {
     setSushiIsFound,
     setSumoIsFound,
     dropdownIsShifted,
+    handleErrorSpan,
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
@@ -28,7 +29,6 @@ export function TokyoDropdown(props: DropdownProps) {
   const adjDropdownX = mouseX + 20;
   const shiftedDropdownY = mouseY - 120;
   const shiftedDropdownX = mouseX - 120;
-
 
   function checkIfDivAndDropdownMatch(event: any) {
     if (clickHistory.includes(`${event.target.dataset.id}Div`)) {
@@ -53,8 +53,9 @@ export function TokyoDropdown(props: DropdownProps) {
           break;
       }
       handleSetClickHistory(event);
-    }else {
+    } else {
       AudioFunctions().wrong.play();
+      handleErrorSpan();
     }
   }
 

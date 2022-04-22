@@ -47,6 +47,7 @@ function App() {
   const [monalisaIsFound, setMonalisaIsFound] = useState(false);
   const [tophatIsFound, setTophatIsFound] = useState(false);
   const [dropdownIsShifted, setDropdownIsShifted] = useState(false);
+  const [errorSpanIsVisible, setErrorSpanIsVisible] = useState(false);
 
   function handleMouseClickPosition(event: any) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -89,6 +90,13 @@ function App() {
     }
   }
 
+  function handleErrorSpan() {
+    setErrorSpanIsVisible(true);
+    setTimeout(() => {
+      setErrorSpanIsVisible(false);
+    }, 2000);
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -121,6 +129,8 @@ function App() {
                 setIlovenyIsFound={setIlovenyIsFound}
                 setPoliceIsFound={setPoliceIsFound}
                 dropdownIsShifted={dropdownIsShifted}
+                errorSpanIsVisible={errorSpanIsVisible}
+                handleErrorSpan={handleErrorSpan}
               />
             }
           />
@@ -148,6 +158,8 @@ function App() {
                 setSoccerIsFound={setSoccerIsFound}
                 setTambourineIsFound={setTambourineIsFound}
                 dropdownIsShifted={dropdownIsShifted}
+                errorSpanIsVisible={errorSpanIsVisible}
+                handleErrorSpan={handleErrorSpan}
               />
             }
           />
@@ -175,6 +187,8 @@ function App() {
                 setSushiIsFound={setSushiIsFound}
                 setSumoIsFound={setSumoIsFound}
                 dropdownIsShifted={dropdownIsShifted}
+                errorSpanIsVisible={errorSpanIsVisible}
+                handleErrorSpan={handleErrorSpan}
               />
             }
           />
@@ -202,6 +216,8 @@ function App() {
                 setMonalisaIsFound={setMonalisaIsFound}
                 setTophatIsFound={setTophatIsFound}
                 dropdownIsShifted={dropdownIsShifted}
+                errorSpanIsVisible={errorSpanIsVisible}
+                handleErrorSpan={handleErrorSpan}
               />
             }
           />

@@ -11,6 +11,8 @@ import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
+import { DivProps } from "../../Interfaces";
+import { ErrorSpan } from "../../components/ErrorSpan";
 
 export function Paris(props: CityProps) {
   const {
@@ -34,6 +36,8 @@ export function Paris(props: CityProps) {
     setMonalisaIsFound,
     setTophatIsFound,
     dropdownIsShifted,
+    errorSpanIsVisible,
+    handleErrorSpan,
   } = props;
 
   const brieText = "Brie";
@@ -41,15 +45,13 @@ export function Paris(props: CityProps) {
   const monalisaText = "Mona lisa";
   const tophatText = "Tophat";
 
-  const [userId, setUserId] = useState("")
-  
+  const [userId, setUserId] = useState("");
+
   useEffect(() => {
-   setIsActive(true);
     let interval: NodeJS.Timer;
     if (isActive) {
-
       const docRef = doc(collection(db, "parisUsers"));
-      setDoc(docRef,{id: docRef.id})
+      setDoc(docRef, { id: docRef.id });
       console.log("Document written");
       setUserId(docRef.id);
 
@@ -58,8 +60,12 @@ export function Paris(props: CityProps) {
       }, 10);
     } else if (!isActive) {
       clearInterval(interval);
-      const userRef = doc(db, 'parisUsers', userId);
-      setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
+      const userRef = doc(db, "parisUsers", userId);
+      setDoc(
+        userRef,
+        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        { merge: true }
+      );
     }
     return () => clearInterval(interval);
   }, [isActive]);
@@ -69,7 +75,7 @@ export function Paris(props: CityProps) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 600);
+      }, 800);
     }
   }, [
     brieIsFound,
@@ -95,6 +101,7 @@ export function Paris(props: CityProps) {
           onClick={(event) => handleMouseClickPosition(event)}
         >
           <CityImage src={paris} />
+          {errorSpanIsVisible && <ErrorSpan />}
           <BrieDiv
             brieIsFound={brieIsFound}
             data-id="brieDiv"
@@ -130,6 +137,7 @@ export function Paris(props: CityProps) {
             setMonalisaIsFound={setMonalisaIsFound}
             setTophatIsFound={setTophatIsFound}
             dropdownIsShifted={dropdownIsShifted}
+            handleErrorSpan={handleErrorSpan}
           />
         </CityImageContainer>
       </VFlexContainer>
@@ -138,12 +146,6 @@ export function Paris(props: CityProps) {
 }
 
 //STYLED COMPONENTS//
-interface DivProps {
-  brieIsFound?: boolean;
-  fleurdelisIsFound?: boolean;
-  monalisaIsFound?: boolean;
-  tophatIsFound?: boolean;
-}
 
 const BrieDiv = styled.div<DivProps>`
   width: 2.5%;
@@ -151,10 +153,8 @@ const BrieDiv = styled.div<DivProps>`
   position: absolute;
   left: 53.4%;
   bottom: 60%;
-  border: ${(props) =>
-    props.brieIsFound ? "5px solid #f94910" : "none"};
-  outline: ${(props) =>
-    props.brieIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.brieIsFound ? "5px solid #f94910" : "none")};
+  outline: ${(props) => (props.brieIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const FleurdelisDiv = styled.div<DivProps>`
@@ -175,10 +175,8 @@ const MonalisaDiv = styled.div<DivProps>`
   position: absolute;
   left: 77.5%;
   bottom: 54.5%;
-  border: ${(props) =>
-    props.monalisaIsFound ? "5px solid #f94910" : "none"};
-  outline: ${(props) =>
-    props.monalisaIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.monalisaIsFound ? "5px solid #f94910" : "none")};
+  outline: ${(props) => (props.monalisaIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;
 const TophatDiv = styled.div<DivProps>`
@@ -187,9 +185,7 @@ const TophatDiv = styled.div<DivProps>`
   position: absolute;
   left: 77.4%;
   bottom: 9.3%;
-  border: ${(props) =>
-    props.tophatIsFound ? "5px solid #f94910" : "none"};
-  outline: ${(props) =>
-    props.tophatIsFound ? "3px solid #121212" : "none"};
+  border: ${(props) => (props.tophatIsFound ? "5px solid #f94910" : "none")};
+  outline: ${(props) => (props.tophatIsFound ? "3px solid #121212" : "none")};
   border-radius: 5px;
 `;

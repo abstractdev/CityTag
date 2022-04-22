@@ -21,6 +21,7 @@ export function ParisDropdown(props: DropdownProps) {
     setMonalisaIsFound,
     setTophatIsFound,
     dropdownIsShifted,
+    handleErrorSpan,
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
@@ -52,8 +53,9 @@ export function ParisDropdown(props: DropdownProps) {
           break;
       }
       handleSetClickHistory(event);
-    }else {
+    } else {
       AudioFunctions().wrong.play();
+      handleErrorSpan();
     }
   }
 

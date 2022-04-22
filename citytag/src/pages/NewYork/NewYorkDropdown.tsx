@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { setInterval } from "timers";
 import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
@@ -20,6 +21,7 @@ export function NewYorkDropdown(props: DropdownProps) {
     setHotdogIsFound,
     setIlovenyIsFound,
     setPoliceIsFound,
+    handleErrorSpan,
   } = props;
   const adjBoxY = mouseY - 22;
   const adjBoxX = mouseX - 22;
@@ -51,6 +53,7 @@ export function NewYorkDropdown(props: DropdownProps) {
       handleSetClickHistory(event);
     } else {
       AudioFunctions().wrong.play();
+      handleErrorSpan();
     }
   }
 

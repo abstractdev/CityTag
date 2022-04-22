@@ -43,6 +43,8 @@ export interface CityProps {
   setMonalisaIsFound?: (monalisaIsFound: boolean) => void;
   setTophatIsFound?: (tophatIsFound: boolean) => void;
   dropdownIsShifted?: boolean;
+  errorSpanIsVisible?: boolean;
+  handleErrorSpan: () => void;
 }
 
 export interface DropdownProps {
@@ -84,6 +86,8 @@ export interface DropdownProps {
   setMonalisaIsFound?: (monalisaIsFound: boolean) => void;
   setTophatIsFound?: (tophatIsFound: boolean) => void;
   dropdownIsShifted?: boolean;
+  errorSpanIsVisible?: boolean;
+  handleErrorSpan: () => void;
 }
 
 export interface FindProps {
@@ -133,4 +137,23 @@ export interface TimerProps {
 
 export interface HomeProps {
   setIsActive: (isActive: boolean) => void;
+}
+
+export interface DivProps {
+  broadwayIsFound?: boolean;
+  hotdogIsFound?: boolean;
+  ilovenyIsFound?: boolean;
+  policeIsFound?: boolean;
+  brieIsFound?: boolean;
+  fleurdelisIsFound?: boolean;
+  monalisaIsFound?: boolean;
+  tophatIsFound?: boolean;
+  dancerIsFound?: boolean;
+  flagIsFound?: boolean;
+  soccerIsFound?: boolean;
+  tambourineIsFound?: boolean;
+  geishaIsFound?: boolean;
+  parasolIsFound?: boolean;
+  sushiIsFound?: boolean;
+  sumoIsFound?: boolean;
 }
