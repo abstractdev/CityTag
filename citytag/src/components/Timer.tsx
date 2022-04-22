@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { convertMsToDisplayTime } from '../UtlityFunctions'
 
 interface TimerProps {
   time: number;
@@ -9,18 +10,7 @@ export function Timer(props: TimerProps) {
   return (
     <>
       <TimerDiv isActive={props.isActive}>
-        <TimerSpan>
-          {("0" + Math.floor((props.time / 60000) % 60)).slice(-1)}
-          <span style={{ fontSize: "70%" }}>min</span>
-        </TimerSpan>
-        <TimerSpan>
-          {("0" + Math.floor((props.time / 1000) % 60)).slice(-2)}
-          <span style={{ fontSize: "70%" }}>.</span>
-        </TimerSpan>
-        <TimerSpan>
-          {("0" + (props.time % 1000)).slice(-2)}
-          <span style={{ fontSize: "70%" }}>s</span>
-        </TimerSpan>
+        <TimerSpan>{convertMsToDisplayTime(props.time)}</TimerSpan>
       </TimerDiv>
     </>
   );
