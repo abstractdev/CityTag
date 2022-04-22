@@ -54,19 +54,25 @@ export function RioFind(props: FindProps) {
   return (
     <>
       <FindContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.dancerIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={dancer} />
           {props.dancerText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer style={props.flagIsFound ? { opacity: "30%" } : {}}>
           <FindImage src={flag} />
           {props.flagText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.soccerIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={soccer} />
           {props.soccerText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.tambourineIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={tambourine} />
           {props.tambourineText}
         </FindImageContainer>
@@ -78,19 +84,25 @@ export function TokyoFind(props: FindProps) {
   return (
     <>
       <FindContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.geishaIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={geisha} />
           {props.geishaText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.parasolIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={parasol} />
           {props.parasolText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.sushiIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={sushi} />
           {props.sushiText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer style={props.sumoIsFound ? { opacity: "30%" } : {}}>
           <FindImage src={sumo} />
           {props.sumoText}
         </FindImageContainer>
@@ -102,19 +114,25 @@ export function ParisFind(props: FindProps) {
   return (
     <>
       <FindContainer>
-        <FindImageContainer>
+        <FindImageContainer style={props.brieIsFound ? { opacity: "30%" } : {}}>
           <FindImage src={brie} />
           {props.brieText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.fleurdelisIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={fleurdelis} />
           {props.fleurdelisText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.monalisaIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={monalisa} />
           {props.monalisaText}
         </FindImageContainer>
-        <FindImageContainer>
+        <FindImageContainer
+          style={props.tophatIsFound ? { opacity: "30%" } : {}}
+        >
           <FindImage src={tophat} />
           {props.tophatText}
         </FindImageContainer>
