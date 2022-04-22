@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { convertMsToDisplayTime } from '../UtlityFunctions'
-
-interface TimerProps {
-  time: number;
-  isActive: boolean;
-}
+import { convertMsToDisplayTime } from "../UtlityFunctions";
+import { TimerProps } from "../Interfaces";
 
 export function Timer(props: TimerProps) {
   return (

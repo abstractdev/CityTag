@@ -1,13 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Timer } from "./Timer";
+import { HeaderProps } from "../Interfaces";
 
-interface headerProps {
-  time: number;
-  isActive: boolean;
-}
-
-export function Header(props: headerProps) {
+export function Header(props: HeaderProps) {
   return (
     <StyledHeaderContainer>
       <StyledHeaderTextContainer>

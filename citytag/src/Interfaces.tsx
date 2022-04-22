@@ -120,3 +120,17 @@ export interface FindProps {
   monalisaIsFound?: boolean;
   tophatIsFound?: boolean;
 }
+
+export interface HeaderProps {
+  time: number;
+  isActive: boolean;
+}
+
+export interface TimerProps {
+  time: number;
+  isActive: boolean;
+}
+
+export interface HomeProps {
+  setIsActive: (isActive: boolean) => void;
+}
