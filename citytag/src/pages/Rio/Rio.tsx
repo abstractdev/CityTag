@@ -13,6 +13,8 @@ import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
+import { UserModal } from "../../components/UserModal";
+import { useNavigate } from "react-router-dom";
 
 export function Rio(props: CityProps) {
   const {
@@ -38,40 +40,49 @@ export function Rio(props: CityProps) {
     dropdownIsShifted,
     errorSpanIsVisible,
     handleErrorSpan,
+    modalIsVisible,
+    setModalIsVisible,
   } = props;
   const dancerText = "Dancer";
   const flagText = "Flag";
   const soccerText = "Soccer Ball";
   const tambourineText = "Tambourine";
   const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //  setIsActive(true);
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      const docRef = doc(collection(db, "rioUsers"));
+      setDoc(docRef, { id: docRef.id });
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     const docRef = doc(collection(db, "rioUsers"));
-  //     setDoc(docRef,{id: docRef.id})
-  //     console.log("Document written");
-  //     setUserId(docRef.id);
-
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, 'rioUsers', userId);
-  //     setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, "rioUsers", userId);
+      setDoc(
+        userRef,
+        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        { merge: true }
+      );
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (dancerIsFound && flagIsFound && soccerIsFound && tambourineIsFound) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 800);
+      }, 600);
+      setTimeout(() => {
+        setModalIsVisible(true);
+      }, 2000);
     }
   }, [
     dancerIsFound,
@@ -80,8 +91,34 @@ export function Rio(props: CityProps) {
     tambourineIsFound,
     setIsActive,
   ]);
+
+  function navigateBack() {
+    navigate(-1);
+    setTimeout(() => {
+      navigate(0);
+    }, 50);
+  }
+  function handleFormSubmit(event: any) {
+    event.preventDefault();
+    event.target.reset();
+    setModalIsVisible(false);
+    const userRef = doc(db, "rioUsers", userId);
+    setDoc(userRef, { name: name }, { merge: true });
+    navigateBack();
+  }
+
+  function handleOnChange(event: any) {
+    setName(event.target.value);
+  }
   return (
     <>
+      <UserModal
+        name={name}
+        modalIsVisible={modalIsVisible}
+        setModalIsVisible={setModalIsVisible}
+        handleFormSubmit={handleFormSubmit}
+        handleOnChange={handleOnChange}
+      />
       <VFlexContainer>
         <RioFind
           dancerText={dancerText}

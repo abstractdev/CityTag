@@ -13,6 +13,8 @@ import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { AudioFunctions } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
+import { UserModal } from "../../components/UserModal";
+import { useNavigate } from "react-router-dom";
 
 export function NewYork(props: CityProps) {
   const {
@@ -37,6 +39,8 @@ export function NewYork(props: CityProps) {
     checkFirebaseForMatch,
     errorSpanIsVisible,
     handleErrorSpan,
+    modalIsVisible,
+    setModalIsVisible,
   } = props;
   const broadwayText = "Broadway Sign";
   const hotdogText = "Hot Dog Vendor";
@@ -44,36 +48,41 @@ export function NewYork(props: CityProps) {
   const policeText = "NYPD Officer";
 
   const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
-  //     const docRef = doc(collection(db, "nyUsers"));
-  //     setDoc(docRef, { id: docRef.id });
-  //     console.log("Document written");
-  //     setUserId(docRef.id);
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      const docRef = doc(collection(db, "nyUsers"));
+      setDoc(docRef, { id: docRef.id });
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, "nyUsers", userId);
-  //     setDoc(
-  //       userRef,
-  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
-  //       { merge: true }
-  //     );
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, "nyUsers", userId);
+      setDoc(
+        userRef,
+        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        { merge: true }
+      );
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (broadwayIsFound && hotdogIsFound && ilovenyIsFound && policeIsFound) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 800);
+      }, 600);
+      setTimeout(() => {
+        setModalIsVisible(true);
+      }, 2000);
     }
   }, [
     broadwayIsFound,
@@ -83,8 +92,34 @@ export function NewYork(props: CityProps) {
     setIsActive,
   ]);
 
+  function navigateBack() {
+    navigate(-1);
+    setTimeout(() => {
+      navigate(0);
+    }, 50);
+  }
+  function handleFormSubmit(event: any) {
+    event.preventDefault();
+    event.target.reset();
+    setModalIsVisible(false);
+    const userRef = doc(db, "nyUsers", userId);
+    setDoc(userRef, { name: name }, { merge: true });
+    navigateBack();
+  }
+
+  function handleOnChange(event: any) {
+    setName(event.target.value);
+  }
+
   return (
     <>
+      <UserModal
+        name={name}
+        modalIsVisible={modalIsVisible}
+        setModalIsVisible={setModalIsVisible}
+        handleFormSubmit={handleFormSubmit}
+        handleOnChange={handleOnChange}
+      />
       <VFlexContainer>
         <NewYorkFind
           broadwayText={broadwayText}
@@ -159,19 +194,19 @@ const BroadwayDiv = styled.div<DivProps>`
 
 const HotdogDiv = styled.div<DivProps>`
   width: 3%;
-  height: 9%;
+  height: 9.3%;
   position: absolute;
-  left: 15.5%;
+  left: 15.4%;
   bottom: 32%;
   border: ${(props) => (props.hotdogIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) => (props.hotdogIsFound ? "3px solid #121212;" : "none")};
   border-radius: 5px;
 `;
 const IlovenyDiv = styled.div<DivProps>`
-  width: 2.7%;
-  height: 9%;
+  width: 3.1%;
+  height: 8.7%;
   position: absolute;
-  left: 46%;
+  left: 45.9%;
   bottom: 42%;
   border: ${(props) => (props.ilovenyIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) => (props.ilovenyIsFound ? "3px solid #121212;" : "none")};

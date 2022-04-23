@@ -13,6 +13,8 @@ import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
+import { UserModal } from "../../components/UserModal";
+import { useNavigate } from "react-router-dom";
 
 export function Paris(props: CityProps) {
   const {
@@ -38,6 +40,8 @@ export function Paris(props: CityProps) {
     dropdownIsShifted,
     errorSpanIsVisible,
     handleErrorSpan,
+    modalIsVisible,
+    setModalIsVisible,
   } = props;
 
   const brieText = "Brie";
@@ -46,6 +50,8 @@ export function Paris(props: CityProps) {
   const tophatText = "Tophat";
 
   const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval: NodeJS.Timer;
@@ -75,7 +81,10 @@ export function Paris(props: CityProps) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 800);
+      }, 600);
+      setTimeout(() => {
+        setModalIsVisible(true);
+      }, 2000);
     }
   }, [
     brieIsFound,
@@ -84,8 +93,35 @@ export function Paris(props: CityProps) {
     tophatIsFound,
     setIsActive,
   ]);
+
+  function navigateBack() {
+    navigate(-1);
+    setTimeout(() => {
+      navigate(0);
+    }, 50);
+  }
+  function handleFormSubmit(event: any) {
+    event.preventDefault();
+    event.target.reset();
+    setModalIsVisible(false);
+    const userRef = doc(db, "parisUsers", userId);
+    setDoc(userRef, { name: name }, { merge: true });
+    navigateBack();
+  }
+
+  function handleOnChange(event: any) {
+    setName(event.target.value);
+  }
+
   return (
     <>
+      <UserModal
+        name={name}
+        modalIsVisible={modalIsVisible}
+        setModalIsVisible={setModalIsVisible}
+        handleFormSubmit={handleFormSubmit}
+        handleOnChange={handleOnChange}
+      />
       <VFlexContainer>
         <ParisFind
           brieText={brieText}

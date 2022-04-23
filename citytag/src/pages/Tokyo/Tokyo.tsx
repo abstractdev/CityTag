@@ -13,6 +13,8 @@ import { AudioFunctions } from "../../UtlityFunctions";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
+import { UserModal } from "../../components/UserModal";
+import { useNavigate } from "react-router-dom";
 
 export function Tokyo(props: CityProps) {
   const {
@@ -38,6 +40,8 @@ export function Tokyo(props: CityProps) {
     dropdownIsShifted,
     errorSpanIsVisible,
     handleErrorSpan,
+    modalIsVisible,
+    setModalIsVisible,
   } = props;
 
   const geishaText = "Geisha";
@@ -46,39 +50,72 @@ export function Tokyo(props: CityProps) {
   const sumoText = "Sumo Wrestler";
 
   const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //  setIsActive(true);
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      const docRef = doc(collection(db, "tokyoUsers"));
+      setDoc(docRef, { id: docRef.id });
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     const docRef = doc(collection(db, "tokyoUsers"));
-  //     setDoc(docRef,{id: docRef.id})
-  //     console.log("Document written");
-  //     setUserId(docRef.id);
-
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, 'tokyoUsers', userId);
-  //     setDoc(userRef, { time: time, displayTime: `${convertMsToDisplayTime(time)}` }, { merge: true });
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, "tokyoUsers", userId);
+      setDoc(
+        userRef,
+        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        { merge: true }
+      );
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (geishaIsFound && parasolIsFound && sushiIsFound && sumoIsFound) {
       setIsActive(false);
       setTimeout(() => {
         AudioFunctions().end.play();
-      }, 800);
+      }, 600);
+      setTimeout(() => {
+        setModalIsVisible(true);
+      }, 2000);
     }
   }, [geishaIsFound, parasolIsFound, sushiIsFound, sumoIsFound, setIsActive]);
 
+  function navigateBack() {
+    navigate(-1);
+    setTimeout(() => {
+      navigate(0);
+    }, 50);
+  }
+  function handleFormSubmit(event: any) {
+    event.preventDefault();
+    event.target.reset();
+    setModalIsVisible(false);
+    const userRef = doc(db, "tokyoUsers", userId);
+    setDoc(userRef, { name: name }, { merge: true });
+    navigateBack();
+  }
+
+  function handleOnChange(event: any) {
+    setName(event.target.value);
+  }
+
   return (
     <>
+      <UserModal
+        name={name}
+        modalIsVisible={modalIsVisible}
+        setModalIsVisible={setModalIsVisible}
+        handleFormSubmit={handleFormSubmit}
+        handleOnChange={handleOnChange}
+      />
       <VFlexContainer>
         <TokyoFind
           geishaText={geishaText}
