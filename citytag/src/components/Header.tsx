@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Timer } from "./Timer";
 import { HeaderProps } from "../Interfaces";
+import { Leaderboard } from "./Leaderboard";
 
 export function Header(props: HeaderProps) {
   return (
@@ -10,9 +11,7 @@ export function Header(props: HeaderProps) {
         <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
       </StyledHeaderTextContainer>
       {props.isActive && <Timer time={props.time} isActive={props.isActive} />}
-      <LeaderboardLinkContainer>
-        <LeaderboardLink to={"/leaderboard"}>Leaderboard</LeaderboardLink>
-      </LeaderboardLinkContainer>
+      <Leaderboard />
     </StyledHeaderContainer>
   );
 }
@@ -42,21 +41,5 @@ const StyledHeaderText = styled(Link)`
 
   @media screen and (max-width: 644px) {
     font-size: 2rem;
-  }
-`;
-
-const LeaderboardLinkContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const LeaderboardLink = styled(Link)`
-  font-size: 2rem;
-  text-decoration: none;
-  font-family: "sky";
-  color: #fff;
-
-  @media screen and (max-width: 644px) {
-    font-size: 1rem;
   }
 `;
