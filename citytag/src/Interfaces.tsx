@@ -45,6 +45,8 @@ export interface CityProps {
   dropdownIsShifted?: boolean;
   errorSpanIsVisible?: boolean;
   handleErrorSpan: () => void;
+  modalIsVisible?: boolean;
+  setModalIsVisible?: (modalIsVisible: boolean) => void;
 }
 
 export interface DropdownProps {
@@ -156,4 +158,12 @@ export interface DivProps {
   parasolIsFound?: boolean;
   sushiIsFound?: boolean;
   sumoIsFound?: boolean;
+}
+
+export interface UserModalProps {
+  name: string;
+  modalIsVisible: boolean;
+  setModalIsVisible: (modalIsVisible: boolean) => void;
+  handleFormSubmit: (event: any) => void;
+  handleOnChange: (event: any) => void;
 }
