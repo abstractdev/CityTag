@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { ModalContainer, Modal } from "../styles/Modal.styles";
 import { VFlexContainer } from "../styles/VFlexContainer.styles";
 import { LeaderboardTable } from "./LeaderboardTable";
-import { ModalCloseButton } from "./ModalCloseButton";
+import { LeaderboardModalCloseButton } from "./LeaderboardModalCloseButton";
 import { LeaderboardModalProps } from "../Interfaces";
 import { useEffect, useRef } from "react";
 import { clickOutsideFunction } from "../UtlityFunctions";
-import { useNavigate } from "react-router-dom";
+import { StyledH1 } from "../styles/Leaderboard.styles";
 
 export function LeaderboardModal(props: LeaderboardModalProps) {
   const {
@@ -17,32 +17,24 @@ export function LeaderboardModal(props: LeaderboardModalProps) {
     setLeaderboardIsVisible,
   } = props;
   const mainModalRef = useRef();
-  const navigate = useNavigate();
-  const goHomeAndRefresh = () => {
-    navigate(-1);
-    setTimeout(() => {
-      navigate(0);
-    }, 500);
-  };
   useEffect(() => {
     clickOutsideFunction(
       leaderboardIsVisible,
       setLeaderboardIsVisible,
       mainModalRef,
-      goHomeAndRefresh
     );
   }, [leaderboardIsVisible]);
   return (
     <>
-      <ModalContainer>
+      {leaderboardIsVisible && <ModalContainer>
         <MainModal cityColor={cityColor} ref={mainModalRef}>
-          <ModalCloseButton />
+          <LeaderboardModalCloseButton setLeaderboardIsVisible={setLeaderboardIsVisible}/>
           <VFlexContainer>
             <StyledH1 cityFont={cityFont}>{cityText}</StyledH1>
           </VFlexContainer>
           <LeaderboardTable />
         </MainModal>
-      </ModalContainer>
+      </ModalContainer>}
     </>
   );
 }
@@ -53,10 +45,8 @@ const MainModal = styled(Modal)<{ cityColor: string }>`
   justify-content: center;
   align-items: center;
   background-color: ${({ cityColor }) => cityColor};
-`;
-
-const StyledH1 = styled.h1<{ cityFont: string }>`
-  text-align: center;
-  font-size: 4rem;
-  font-family: ${({ cityFont }) => cityFont};
+  border: 5px solid #FFF;
+  @media screen and (max-width: 644px) {
+    width: 100%
+  }
 `;
