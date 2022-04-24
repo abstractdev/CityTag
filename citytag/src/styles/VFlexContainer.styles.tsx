@@ -5,5 +5,4 @@ export const VFlexContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  background-color: ${({ theme }) => theme.colors.main};
 `;
