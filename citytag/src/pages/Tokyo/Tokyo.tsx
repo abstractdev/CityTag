@@ -1,5 +1,5 @@
 import tokyo from "../../assets/images/tokyo/tokyo.jpg";
-import { TokyoFind } from "../../components/Find";
+import { TokyoFind } from "./TokyoFind";
 import { VFlexContainer } from "../../styles/VFlexContainer.styles";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { CityImage } from "../../styles/CityImage.styles";
@@ -15,6 +15,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { useNavigate } from "react-router-dom";
+import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function Tokyo(props: CityProps) {
   const {
@@ -42,6 +43,8 @@ export function Tokyo(props: CityProps) {
     handleErrorSpan,
     modalIsVisible,
     setModalIsVisible,
+    leaderboardIsVisible,
+    setLeaderboardIsVisible,
   } = props;
 
   const geishaText = "Geisha";
@@ -109,6 +112,11 @@ export function Tokyo(props: CityProps) {
 
   return (
     <>
+      <LeaderboardModal
+        cityColor={"#d78ebf"}
+        cityFont={"tokyo"}
+        cityText={"Tokyo"}
+      />
       <UserModal
         name={name}
         modalIsVisible={modalIsVisible}

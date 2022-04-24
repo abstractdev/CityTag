@@ -47,6 +47,8 @@ export interface CityProps {
   handleErrorSpan: () => void;
   modalIsVisible?: boolean;
   setModalIsVisible?: (modalIsVisible: boolean) => void;
+  leaderboardIsVisible?: boolean;
+  setLeaderboardIsVisible: (leaderboardIsVisible: boolean) => void;
 }
 
 export interface DropdownProps {
@@ -166,4 +168,12 @@ export interface UserModalProps {
   setModalIsVisible: (modalIsVisible: boolean) => void;
   handleFormSubmit: (event: any) => void;
   handleOnChange: (event: any) => void;
+}
+
+export interface LeaderboardModalProps {
+  cityColor: string;
+  cityFont: string;
+  cityText: string;
+  leaderboardIsVisible?: boolean;
+  setLeaderboardIsVisible?: (modalIsVisible: boolean) => void;
 }

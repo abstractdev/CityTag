@@ -2,7 +2,7 @@ import rio from "../../assets/images/rio/rio.jpg";
 import { VFlexContainer } from "../../styles/VFlexContainer.styles";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { CityImage } from "../../styles/CityImage.styles";
-import { RioFind } from "../../components/Find";
+import { RioFind } from "./RioFind";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { RioDropdown } from "./RioDropdown";
@@ -15,6 +15,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { useNavigate } from "react-router-dom";
+import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function Rio(props: CityProps) {
   const {
@@ -42,6 +43,8 @@ export function Rio(props: CityProps) {
     handleErrorSpan,
     modalIsVisible,
     setModalIsVisible,
+    leaderboardIsVisible,
+    setLeaderboardIsVisible,
   } = props;
   const dancerText = "Dancer";
   const flagText = "Flag";
@@ -51,28 +54,28 @@ export function Rio(props: CityProps) {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let interval: NodeJS.Timer;
-    if (isActive) {
-      const docRef = doc(collection(db, "rioUsers"));
-      setDoc(docRef, { id: docRef.id });
-      console.log("Document written");
-      setUserId(docRef.id);
+  // useEffect(() => {
+  //   let interval: NodeJS.Timer;
+  //   if (isActive) {
+  //     const docRef = doc(collection(db, "rioUsers"));
+  //     setDoc(docRef, { id: docRef.id });
+  //     console.log("Document written");
+  //     setUserId(docRef.id);
 
-      interval = setInterval(() => {
-        setTime((prev) => prev + 10);
-      }, 10);
-    } else if (!isActive) {
-      clearInterval(interval);
-      const userRef = doc(db, "rioUsers", userId);
-      setDoc(
-        userRef,
-        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
-        { merge: true }
-      );
-    }
-    return () => clearInterval(interval);
-  }, [isActive]);
+  //     interval = setInterval(() => {
+  //       setTime((prev) => prev + 10);
+  //     }, 10);
+  //   } else if (!isActive) {
+  //     clearInterval(interval);
+  //     const userRef = doc(db, "rioUsers", userId);
+  //     setDoc(
+  //       userRef,
+  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+  //       { merge: true }
+  //     );
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isActive]);
 
   useEffect(() => {
     if (dancerIsFound && flagIsFound && soccerIsFound && tambourineIsFound) {
@@ -112,6 +115,11 @@ export function Rio(props: CityProps) {
   }
   return (
     <>
+      <LeaderboardModal
+        cityColor="#00ad73"
+        cityFont="rio"
+        cityText="Rio De Janeiro"
+      />
       <UserModal
         name={name}
         modalIsVisible={modalIsVisible}

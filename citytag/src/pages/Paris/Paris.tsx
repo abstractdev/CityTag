@@ -1,5 +1,5 @@
 import paris from "../../assets/images/paris/paris.jpg";
-import { ParisFind } from "../../components/Find";
+import { ParisFind } from "./ParisFind";
 import { VFlexContainer } from "../../styles/VFlexContainer.styles";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { CityImage } from "../../styles/CityImage.styles";
@@ -15,6 +15,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { useNavigate } from "react-router-dom";
+import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function Paris(props: CityProps) {
   const {
@@ -42,6 +43,8 @@ export function Paris(props: CityProps) {
     handleErrorSpan,
     modalIsVisible,
     setModalIsVisible,
+    leaderboardIsVisible,
+    setLeaderboardIsVisible,
   } = props;
 
   const brieText = "Brie";
@@ -53,28 +56,28 @@ export function Paris(props: CityProps) {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let interval: NodeJS.Timer;
-    if (isActive) {
-      const docRef = doc(collection(db, "parisUsers"));
-      setDoc(docRef, { id: docRef.id });
-      console.log("Document written");
-      setUserId(docRef.id);
+  // useEffect(() => {
+  //   let interval: NodeJS.Timer;
+  //   if (isActive) {
+  //     const docRef = doc(collection(db, "parisUsers"));
+  //     setDoc(docRef, { id: docRef.id });
+  //     console.log("Document written");
+  //     setUserId(docRef.id);
 
-      interval = setInterval(() => {
-        setTime((prev) => prev + 10);
-      }, 10);
-    } else if (!isActive) {
-      clearInterval(interval);
-      const userRef = doc(db, "parisUsers", userId);
-      setDoc(
-        userRef,
-        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
-        { merge: true }
-      );
-    }
-    return () => clearInterval(interval);
-  }, [isActive]);
+  //     interval = setInterval(() => {
+  //       setTime((prev) => prev + 10);
+  //     }, 10);
+  //   } else if (!isActive) {
+  //     clearInterval(interval);
+  //     const userRef = doc(db, "parisUsers", userId);
+  //     setDoc(
+  //       userRef,
+  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+  //       { merge: true }
+  //     );
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isActive]);
 
   useEffect(() => {
     if (brieIsFound && fleurdelisIsFound && monalisaIsFound && tophatIsFound) {
@@ -115,6 +118,11 @@ export function Paris(props: CityProps) {
 
   return (
     <>
+      <LeaderboardModal
+        cityColor={"#f94910"}
+        cityFont={"paris"}
+        cityText={"Paris"}
+      />
       <UserModal
         name={name}
         modalIsVisible={modalIsVisible}

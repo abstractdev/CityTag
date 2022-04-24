@@ -48,6 +48,8 @@ function App() {
   const [tophatIsFound, setTophatIsFound] = useState(false);
   const [dropdownIsShifted, setDropdownIsShifted] = useState(false);
   const [errorSpanIsVisible, setErrorSpanIsVisible] = useState(false);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [leaderboardIsVisible, setLeaderboardIsVisible] = useState(false);
 
   function handleMouseClickPosition(event: any) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -104,7 +106,6 @@ function App() {
         <Header time={time} isActive={isActive} />
         <Routes>
           <Route path="/" element={<Home setIsActive={setIsActive} />} />
-          {/* <Route path="/leaderboard" element={} /> */}
           <Route
             path="/newyork"
             element={
@@ -131,6 +132,10 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
+                modalIsVisible={modalIsVisible}
+                setModalIsVisible={setModalIsVisible}
+                leaderboardIsVisible={leaderboardIsVisible}
+                setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
             }
           />
@@ -160,6 +165,10 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
+                modalIsVisible={modalIsVisible}
+                setModalIsVisible={setModalIsVisible}
+                leaderboardIsVisible={leaderboardIsVisible}
+                setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
             }
           />
@@ -189,6 +198,10 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
+                modalIsVisible={modalIsVisible}
+                setModalIsVisible={setModalIsVisible}
+                leaderboardIsVisible={leaderboardIsVisible}
+                setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
             }
           />
@@ -218,6 +231,10 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
+                modalIsVisible={modalIsVisible}
+                setModalIsVisible={setModalIsVisible}
+                leaderboardIsVisible={leaderboardIsVisible}
+                setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
             }
           />

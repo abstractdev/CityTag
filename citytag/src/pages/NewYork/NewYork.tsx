@@ -2,7 +2,7 @@ import ny from "../../assets/images/ny/ny.jpg";
 import styled from "styled-components";
 import { VFlexContainer } from "../../styles/VFlexContainer.styles";
 import { CityImage } from "../../styles/CityImage.styles";
-import { NewYorkFind } from "../../components/Find";
+import { NewYorkFind } from "./NewYorkFind";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { NewYorkDropdown } from "./NewYorkDropdown";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { useNavigate } from "react-router-dom";
+import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function NewYork(props: CityProps) {
   const {
@@ -41,6 +42,8 @@ export function NewYork(props: CityProps) {
     handleErrorSpan,
     modalIsVisible,
     setModalIsVisible,
+    leaderboardIsVisible,
+    setLeaderboardIsVisible,
   } = props;
   const broadwayText = "Broadway Sign";
   const hotdogText = "Hot Dog Vendor";
@@ -104,7 +107,7 @@ export function NewYork(props: CityProps) {
     setModalIsVisible(false);
     const userRef = doc(db, "nyUsers", userId);
     setDoc(userRef, { name: name }, { merge: true });
-    navigateBack();
+    setLeaderboardIsVisible(true);
   }
 
   function handleOnChange(event: any) {
@@ -113,6 +116,15 @@ export function NewYork(props: CityProps) {
 
   return (
     <>
+      {leaderboardIsVisible && (
+        <LeaderboardModal
+          cityColor={"#f2c205"}
+          cityFont={"newyork"}
+          cityText={"New York"}
+          leaderboardIsVisible={leaderboardIsVisible}
+          setLeaderboardIsVisible={setLeaderboardIsVisible}
+        />
+      )}
       <UserModal
         name={name}
         modalIsVisible={modalIsVisible}
