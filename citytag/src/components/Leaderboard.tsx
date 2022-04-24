@@ -2,25 +2,19 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useState, useRef, useEffect } from "react";
+import { clickOutsideFunction } from "../UtlityFunctions";
 
 export function Leaderboard() {
   const containerRef = useRef<HTMLDivElement>();
   const [dropdownIsOpen, setdropdownIsOpen] = useState(false);
-
+  const emptyfunction = () => "";
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (
-        dropdownIsOpen &&
-        containerRef.current &&
-        !containerRef.current.contains(event.target)
-      ) {
-        setdropdownIsOpen(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
+    clickOutsideFunction(
+      dropdownIsOpen,
+      setdropdownIsOpen,
+      containerRef,
+      emptyfunction
+    );
   }, [dropdownIsOpen]);
 
   function handleSetDropdownIsOpen(event: any) {
@@ -94,6 +88,7 @@ const LeaderboardDropdownContainer = styled.div`
   background-color: #fff;
   margin: 0.4em 0;
   border-radius: 5px;
+  z-index: 1;
 `;
 
 const StyledLi = styled.li`
