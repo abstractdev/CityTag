@@ -110,6 +110,8 @@ export function Rio(props: CityProps) {
         cityColor="#00ad73"
         cityFont="rio"
         cityText="Rio De Janeiro"
+        leaderboardIsVisible={leaderboardIsVisible}
+        setLeaderboardIsVisible={setLeaderboardIsVisible}
       />
       <UserModal
         name={name}

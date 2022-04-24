@@ -113,6 +113,8 @@ export function Paris(props: CityProps) {
         cityColor={"#f94910"}
         cityFont={"paris"}
         cityText={"Paris"}
+        leaderboardIsVisible={leaderboardIsVisible}
+        setLeaderboardIsVisible={setLeaderboardIsVisible}
       />
       <UserModal
         name={name}

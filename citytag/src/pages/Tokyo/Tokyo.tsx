@@ -107,6 +107,8 @@ export function Tokyo(props: CityProps) {
         cityColor={"#d78ebf"}
         cityFont={"tokyo"}
         cityText={"Tokyo"}
+        leaderboardIsVisible={leaderboardIsVisible}
+        setLeaderboardIsVisible={setLeaderboardIsVisible}
       />
       <UserModal
         name={name}
