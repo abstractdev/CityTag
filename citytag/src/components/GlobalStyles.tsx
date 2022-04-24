@@ -3,6 +3,10 @@ import sky from "../assets/fonts/Skyfont-NonCommercial.otf";
 import metropolis from "../assets/fonts/metropolis.regular.otf";
 import city from "../assets/fonts/CityStencil.ttf";
 import metropolisB from "../assets/fonts/metropolis.black.otf"
+import newyork from "../assets/fonts/Newyorkcity.ttf"
+import paris from "../assets/fonts/parisFont.otf"
+import rio from "../assets/fonts/BuenosAiresNF.otf"
+import tokyo from"../assets/fonts/Kamikaze3DGradient.ttf"
 
 export const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -75,5 +79,21 @@ table {
 @font-face {
 	font-family: 'metropolisB';
   src: local('metropolisB'), url(${metropolisB});
+}
+@font-face {
+	font-family: 'newyork';
+  src: local('newyork'), url(${newyork});
+}
+@font-face {
+	font-family: 'paris';
+  src: local('paris'), url(${paris});
+}
+@font-face {
+	font-family: 'rio';
+  src: local('rio'), url(${rio});
+}
+@font-face {
+	font-family: 'tokyo';
+  src: local('tokyo'), url(${tokyo});
 }
 `;
