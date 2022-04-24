@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Timer } from "./Timer";
 import { HeaderProps } from "../Interfaces";
-import { Leaderboard } from "./Leaderboard";
+import { LeaderboardDropdown } from "./LeaderboardDropdown";
 
 export function Header(props: HeaderProps) {
   return (
@@ -11,7 +11,7 @@ export function Header(props: HeaderProps) {
         <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
       </StyledHeaderTextContainer>
       {props.isActive && <Timer time={props.time} isActive={props.isActive} />}
-      <Leaderboard />
+      <LeaderboardDropdown />
     </StyledHeaderContainer>
   );
 }
