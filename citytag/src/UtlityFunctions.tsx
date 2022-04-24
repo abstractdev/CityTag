@@ -25,7 +25,8 @@ export function AudioFunctions() {
 export function clickOutsideFunction(
   contentState: boolean,
   contentSetter: (contentState: boolean) => void,
-  contentRef: any
+  contentRef: any,
+  goHomeAndRefresh: () => void
 ) {
   const handleClickOutside = (event: any) => {
     if (
@@ -34,6 +35,7 @@ export function clickOutsideFunction(
       !contentRef.current.contains(event.target)
     ) {
       contentSetter(false);
+      goHomeAndRefresh();
     }
   };
   document.addEventListener("click", handleClickOutside);

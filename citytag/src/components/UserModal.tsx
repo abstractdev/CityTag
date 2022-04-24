@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { VFlexContainer } from "../styles/VFlexContainer.styles";
-import { Icon } from "@iconify/react";
-import { ModalContainer } from "../styles/Modal.styles";
-import { Modal } from "../styles/Modal.styles";
+import { ModalContainer, Modal } from "../styles/Modal.styles";
 import { useEffect, useRef } from "react";
 import { clickOutsideFunction } from "../UtlityFunctions";
 import { UserModalProps } from "../Interfaces";
+import { ModalCloseButton } from "./ModalCloseButton";
+import { useNavigate } from "react-router-dom";
 
 export function UserModal(props: UserModalProps) {
   const {
@@ -16,8 +16,21 @@ export function UserModal(props: UserModalProps) {
     handleOnChange,
   } = props;
   const nameModalRef = useRef();
+  const navigate = useNavigate();
+  const goHomeAndRefresh = () => {
+    navigate(-1);
+    setTimeout(() => {
+      navigate(0);
+    }, 500);
+  };
+
   useEffect(() => {
-    clickOutsideFunction(modalIsVisible, setModalIsVisible, nameModalRef);
+    clickOutsideFunction(
+      modalIsVisible,
+      setModalIsVisible,
+      nameModalRef,
+      goHomeAndRefresh
+    );
   }, [modalIsVisible]);
 
   return (
@@ -25,12 +38,7 @@ export function UserModal(props: UserModalProps) {
       {modalIsVisible && (
         <ModalContainer>
           <NameModal ref={nameModalRef}>
-            <CloseContainer>
-              <Icon
-                icon="fa:close"
-                style={{ display: "block", margin: "auto" }}
-              />
-            </CloseContainer>
+            <ModalCloseButton />
             <VFlexContainer>
               <Form onSubmit={handleFormSubmit}>
                 <VFlexContainer>
@@ -59,6 +67,10 @@ const NameModal = styled(Modal)`
   height: 300px;
   width: 400px;
   font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
   @media screen and (max-width: 644px) {
     font-size: 1rem;
     height: 200px;
@@ -92,16 +104,4 @@ const FormButton = styled.button`
     width: 80px;
     height: 40px;
   }
-`;
-const CloseContainer = styled.div`
-  position: absolute;
-  height: 3rem;
-  width: 3rem;
-  color: #121212;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-content: center;
 `;
