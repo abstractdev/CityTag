@@ -48,7 +48,7 @@ function App() {
   const [tophatIsFound, setTophatIsFound] = useState(false);
   const [dropdownIsShifted, setDropdownIsShifted] = useState(false);
   const [errorSpanIsVisible, setErrorSpanIsVisible] = useState(false);
-  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [userModalIsVisible, setUserModalIsVisible] = useState(false);
   const [leaderboardIsVisible, setLeaderboardIsVisible] = useState(false);
 
   function handleMouseClickPosition(event: any) {
@@ -132,8 +132,8 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
-                modalIsVisible={modalIsVisible}
-                setModalIsVisible={setModalIsVisible}
+                userModalIsVisible={userModalIsVisible}
+                setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
@@ -165,8 +165,8 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
-                modalIsVisible={modalIsVisible}
-                setModalIsVisible={setModalIsVisible}
+                userModalIsVisible={userModalIsVisible}
+                setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
@@ -198,8 +198,8 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
-                modalIsVisible={modalIsVisible}
-                setModalIsVisible={setModalIsVisible}
+                userModalIsVisible={userModalIsVisible}
+                setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
               />
@@ -231,8 +231,8 @@ function App() {
                 dropdownIsShifted={dropdownIsShifted}
                 errorSpanIsVisible={errorSpanIsVisible}
                 handleErrorSpan={handleErrorSpan}
-                modalIsVisible={modalIsVisible}
-                setModalIsVisible={setModalIsVisible}
+                userModalIsVisible={userModalIsVisible}
+                setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
               />

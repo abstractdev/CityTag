@@ -14,7 +14,6 @@ import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
-import { useNavigate } from "react-router-dom";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function Paris(props: CityProps) {
@@ -41,8 +40,8 @@ export function Paris(props: CityProps) {
     dropdownIsShifted,
     errorSpanIsVisible,
     handleErrorSpan,
-    modalIsVisible,
-    setModalIsVisible,
+    userModalIsVisible,
+    setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
   } = props;
@@ -54,7 +53,6 @@ export function Paris(props: CityProps) {
 
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
-  const navigate = useNavigate();
 
   // useEffect(() => {
   //   let interval: NodeJS.Timer;
@@ -86,7 +84,7 @@ export function Paris(props: CityProps) {
         AudioFunctions().end.play();
       }, 600);
       setTimeout(() => {
-        setModalIsVisible(true);
+        setUserModalIsVisible(true);
       }, 2000);
     }
   }, [
@@ -97,19 +95,12 @@ export function Paris(props: CityProps) {
     setIsActive,
   ]);
 
-  function navigateBack() {
-    navigate(-1);
-    setTimeout(() => {
-      navigate(0);
-    }, 50);
-  }
   function handleFormSubmit(event: any) {
     event.preventDefault();
     event.target.reset();
-    setModalIsVisible(false);
+    setUserModalIsVisible(false);
     const userRef = doc(db, "parisUsers", userId);
     setDoc(userRef, { name: name }, { merge: true });
-    navigateBack();
   }
 
   function handleOnChange(event: any) {
@@ -125,8 +116,8 @@ export function Paris(props: CityProps) {
       />
       <UserModal
         name={name}
-        modalIsVisible={modalIsVisible}
-        setModalIsVisible={setModalIsVisible}
+        userModalIsVisible={userModalIsVisible}
+        setUserModalIsVisible={setUserModalIsVisible}
         handleFormSubmit={handleFormSubmit}
         handleOnChange={handleOnChange}
       />
@@ -143,6 +134,7 @@ export function Paris(props: CityProps) {
         />
         <CityImageContainer
           onClick={(event) => handleMouseClickPosition(event)}
+          style={{ pointerEvents: !isActive ? "none" : "auto" }}
         >
           <CityImage src={paris} />
           {errorSpanIsVisible && <ErrorSpan />}

@@ -11,7 +11,6 @@ export const ModalContainer = styled.div`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 11;
-  /* display: none; */
 `;
 export const Modal = styled.div`
   background-color: #fff;

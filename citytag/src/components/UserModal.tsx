@@ -4,41 +4,32 @@ import { ModalContainer, Modal } from "../styles/Modal.styles";
 import { useEffect, useRef } from "react";
 import { clickOutsideFunction } from "../UtlityFunctions";
 import { UserModalProps } from "../Interfaces";
-import { ModalCloseButton } from "./ModalCloseButton";
-import { useNavigate } from "react-router-dom";
+import { UserModalCloseButton } from "./UserModalCloseButton";
 
 export function UserModal(props: UserModalProps) {
   const {
     name,
-    modalIsVisible,
-    setModalIsVisible,
+    userModalIsVisible,
+    setUserModalIsVisible,
     handleFormSubmit,
     handleOnChange,
   } = props;
   const nameModalRef = useRef();
-  const navigate = useNavigate();
-  const goHomeAndRefresh = () => {
-    navigate(-1);
-    setTimeout(() => {
-      navigate(0);
-    }, 500);
-  };
 
   useEffect(() => {
     clickOutsideFunction(
-      modalIsVisible,
-      setModalIsVisible,
+      userModalIsVisible,
+      setUserModalIsVisible,
       nameModalRef,
-      goHomeAndRefresh
     );
-  }, [modalIsVisible]);
+  }, [userModalIsVisible]);
 
   return (
     <>
-      {modalIsVisible && (
+      {userModalIsVisible && (
         <ModalContainer>
           <NameModal ref={nameModalRef}>
-            <ModalCloseButton />
+            <UserModalCloseButton />
             <VFlexContainer>
               <Form onSubmit={handleFormSubmit}>
                 <VFlexContainer>

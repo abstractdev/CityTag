@@ -14,7 +14,6 @@ import { convertMsToDisplayTime } from "../../UtlityFunctions";
 import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
-import { useNavigate } from "react-router-dom";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
 
 export function Tokyo(props: CityProps) {
@@ -41,8 +40,8 @@ export function Tokyo(props: CityProps) {
     dropdownIsShifted,
     errorSpanIsVisible,
     handleErrorSpan,
-    modalIsVisible,
-    setModalIsVisible,
+    userModalIsVisible,
+    setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
   } = props;
@@ -54,7 +53,6 @@ export function Tokyo(props: CityProps) {
 
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     let interval: NodeJS.Timer;
@@ -86,24 +84,17 @@ export function Tokyo(props: CityProps) {
         AudioFunctions().end.play();
       }, 600);
       setTimeout(() => {
-        setModalIsVisible(true);
+        setUserModalIsVisible(true);
       }, 2000);
     }
   }, [geishaIsFound, parasolIsFound, sushiIsFound, sumoIsFound, setIsActive]);
 
-  function navigateBack() {
-    navigate(-1);
-    setTimeout(() => {
-      navigate(0);
-    }, 50);
-  }
   function handleFormSubmit(event: any) {
     event.preventDefault();
     event.target.reset();
-    setModalIsVisible(false);
+    setUserModalIsVisible(false);
     const userRef = doc(db, "tokyoUsers", userId);
     setDoc(userRef, { name: name }, { merge: true });
-    navigateBack();
   }
 
   function handleOnChange(event: any) {
@@ -119,8 +110,8 @@ export function Tokyo(props: CityProps) {
       />
       <UserModal
         name={name}
-        modalIsVisible={modalIsVisible}
-        setModalIsVisible={setModalIsVisible}
+        userModalIsVisible={userModalIsVisible}
+        setUserModalIsVisible={setUserModalIsVisible}
         handleFormSubmit={handleFormSubmit}
         handleOnChange={handleOnChange}
       />
@@ -137,6 +128,7 @@ export function Tokyo(props: CityProps) {
         />
         <CityImageContainer
           onClick={(event) => handleMouseClickPosition(event)}
+          style={{ pointerEvents: !isActive ? 'none' : 'auto'}}
         >
           <CityImage src={tokyo} />
           {errorSpanIsVisible && <ErrorSpan />}

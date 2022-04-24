@@ -45,8 +45,8 @@ export interface CityProps {
   dropdownIsShifted?: boolean;
   errorSpanIsVisible?: boolean;
   handleErrorSpan: () => void;
-  modalIsVisible?: boolean;
-  setModalIsVisible?: (modalIsVisible: boolean) => void;
+  userModalIsVisible?: boolean;
+  setUserModalIsVisible?: (modalIsVisible: boolean) => void;
   leaderboardIsVisible?: boolean;
   setLeaderboardIsVisible: (leaderboardIsVisible: boolean) => void;
 }
@@ -164,8 +164,8 @@ export interface DivProps {
 
 export interface UserModalProps {
   name: string;
-  modalIsVisible: boolean;
-  setModalIsVisible: (modalIsVisible: boolean) => void;
+  userModalIsVisible: boolean;
+  setUserModalIsVisible: (modalIsVisible: boolean) => void;
   handleFormSubmit: (event: any) => void;
   handleOnChange: (event: any) => void;
 }
@@ -176,4 +176,11 @@ export interface LeaderboardModalProps {
   cityText: string;
   leaderboardIsVisible?: boolean;
   setLeaderboardIsVisible?: (modalIsVisible: boolean) => void;
+}
+
+export interface LeaderboardModalCloseButtonProps {
+  setLeaderboardIsVisible?: (leaderboardIsVisible: boolean) => void;
+}
+export interface UserModalCloseButtonProps {
+  setUserModalIsOpen?: (modalIsOpen: boolean) => void;
 }
