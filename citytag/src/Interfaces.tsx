@@ -184,3 +184,7 @@ export interface LeaderboardModalCloseButtonProps {
 export interface UserModalCloseButtonProps {
   setUserModalIsOpen?: (modalIsOpen: boolean) => void;
 }
+export interface LeaderboardProps {
+  cityFont: string;
+  cityColor: string;
+}

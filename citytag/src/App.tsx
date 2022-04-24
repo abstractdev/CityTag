@@ -11,6 +11,10 @@ import { Tokyo } from "./pages/Tokyo/Tokyo";
 import { Paris } from "./pages/Paris/Paris";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "./components/Firebase";
+import { NewYorkLeaderboard } from "./pages/NewYorkLeaderboard/NewYorkLeaderboard";
+import { ParisLeaderboard } from "./pages/ParisLeaderboard/ParisLeaderboard";
+import { RioLeaderboard } from "./pages/RioLeaderboard/RioLeaderboard";
+import { TokyoLeaderboard } from "./pages/TokyoLeaderboard/TokyoLeaderboard";
 
 const theme = {
   colors: {
@@ -21,7 +25,7 @@ const theme = {
     paris: "#f94910",
     rio: "#00ad73",
     tokyo: "#d78ebf",
-  },
+  }
 };
 function App() {
   const [mouseX, setMouseX] = useState(0);
@@ -106,6 +110,10 @@ function App() {
         <Header time={time} isActive={isActive} />
         <Routes>
           <Route path="/" element={<Home setIsActive={setIsActive} />} />
+          <Route path="newyorkleaderboard" element={<NewYorkLeaderboard cityFont={"newyork"} cityColor={"#f2c205"}/>}/>
+          <Route path="parisleaderboard" element={<ParisLeaderboard cityFont={"paris"} cityColor={"#f94910"}/>}/>
+          <Route path="rioleaderboard" element={<RioLeaderboard cityFont={"rio"} cityColor={"#00ad73"}/>}/>
+          <Route path="tokyoleaderboard" element={<TokyoLeaderboard cityFont={"tokyo"} cityColor={"#d78ebf"}/>}/>
           <Route
             path="/newyork"
             element={
