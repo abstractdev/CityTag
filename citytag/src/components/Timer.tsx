@@ -21,7 +21,7 @@ const TimerDiv = styled.div<TimerDivProps>`
   padding: 0.2em;
   border: ${(props) => (!props.isActive ? "1px solid #FFF" : "none")};
   border-radius: ${(props) => (!props.isActive ? "5px" : "none")};
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 0.6rem;
   }
 `;

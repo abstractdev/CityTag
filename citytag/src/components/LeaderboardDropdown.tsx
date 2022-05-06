@@ -7,11 +7,15 @@ import { clickOutsideFunction } from "../UtlityFunctions";
 export function LeaderboardDropdown() {
   const containerRef = useRef<HTMLDivElement>();
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+  const navigate = () => {
+    ("");
+  };
   useEffect(() => {
     clickOutsideFunction(
       dropdownIsOpen,
       setDropdownIsOpen,
       containerRef,
+      navigate
     );
   }, [dropdownIsOpen]);
 
@@ -34,16 +38,28 @@ export function LeaderboardDropdown() {
         {dropdownIsOpen && (
           <LeaderboardDropdownContainer>
             <ul>
-              <StyledLink to="newyorkleaderboard" onClick={() => setDropdownIsOpen(false)}>
+              <StyledLink
+                to="newyorkleaderboard"
+                onClick={() => setDropdownIsOpen(false)}
+              >
                 <StyledLi>New York</StyledLi>
               </StyledLink>
-              <StyledLink to="rioleaderboard" onClick={() => setDropdownIsOpen(false)}>
+              <StyledLink
+                to="rioleaderboard"
+                onClick={() => setDropdownIsOpen(false)}
+              >
                 <StyledLi>Rio De Janeiro</StyledLi>
               </StyledLink>
-              <StyledLink to="tokyoleaderboard" onClick={() => setDropdownIsOpen(false)}>
+              <StyledLink
+                to="tokyoleaderboard"
+                onClick={() => setDropdownIsOpen(false)}
+              >
                 <StyledLi>Tokyo</StyledLi>
               </StyledLink>
-              <StyledLink to="parisleaderboard" onClick={() => setDropdownIsOpen(false)}>
+              <StyledLink
+                to="parisleaderboard"
+                onClick={() => setDropdownIsOpen(false)}
+              >
                 <StyledLi>Paris</StyledLi>
               </StyledLink>
             </ul>
@@ -66,7 +82,7 @@ const LeaderboardLink = styled.a`
   font-family: "sky";
   color: #fff;
 
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 1rem;
   }
 `;

@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { clickOutsideFunction } from "../UtlityFunctions";
 import { UserModalProps } from "../Interfaces";
 import { UserModalCloseButton } from "./UserModalCloseButton";
+import { useNavigate } from "react-router-dom";
 
 export function UserModal(props: UserModalProps) {
   const {
@@ -15,12 +16,13 @@ export function UserModal(props: UserModalProps) {
     handleOnChange,
   } = props;
   const nameModalRef = useRef();
-
+  const navigate = useNavigate();
   useEffect(() => {
     clickOutsideFunction(
       userModalIsVisible,
       setUserModalIsVisible,
       nameModalRef,
+      navigate
     );
   }, [userModalIsVisible]);
 
@@ -29,7 +31,9 @@ export function UserModal(props: UserModalProps) {
       {userModalIsVisible && (
         <ModalContainer>
           <NameModal ref={nameModalRef}>
-            <UserModalCloseButton />
+            <UserModalCloseButton
+              setUserModalIsVisible={setUserModalIsVisible}
+            />
             <VFlexContainer>
               <Form onSubmit={handleFormSubmit}>
                 <VFlexContainer>
@@ -40,6 +44,7 @@ export function UserModal(props: UserModalProps) {
                     type="text"
                     name="name"
                     id="name"
+                    maxLength={20}
                   />
                 </VFlexContainer>
                 <VFlexContainer>
@@ -55,16 +60,16 @@ export function UserModal(props: UserModalProps) {
 }
 
 const NameModal = styled(Modal)`
-  height: 300px;
+  height: 250px;
   width: 400px;
   font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-content: center;
   flex-direction: column;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 1rem;
-    height: 200px;
+    height: 180px;
     width: 300px;
   }
 `;
@@ -76,21 +81,21 @@ const Input = styled.input`
   border-radius: 5px;
   max-width: 100%;
   padding: 0.5rem;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   font-size: 1.5rem;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 1rem;
   }
 `;
 const FormButton = styled.button`
   width: 160px;
-  height: 80px;
+  height: 60px;
   border-radius: 5px;
   background-color: #121212;
   color: #fff;
   cursor: pointer;
   font-size: 1.5rem;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 1rem;
     width: 80px;
     height: 40px;

@@ -37,7 +37,7 @@ const HomeContainer = styled.div`
   justify-content: center;
   align-content: center;
   padding: 1rem 4rem;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     padding-left: 2rem;
     padding-right: 2rem;
   }
@@ -48,7 +48,7 @@ const HomeText = styled.h2`
   color: #fff;
   text-align: center;
   padding-bottom: 1rem;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 1rem;
   }
 `;
@@ -58,7 +58,7 @@ const HomeContent = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     grid-template-columns: 1fr;
   }
 `;
