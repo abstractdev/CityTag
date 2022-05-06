@@ -122,10 +122,12 @@ export function ParisDropdown(props: DropdownProps) {
 //STYLED COMPONENTS//
 const TargetBoxParis = styled(TargetBox)`
   border: 8px solid ${({ theme }) => theme.colors.paris};
+  @media screen and (max-width: 670px) {
+    border: 4px solid ${({ theme }) => theme.colors.paris};
+  }
 `;
 
 const DropdownContainerParis = styled(DropdownContainer)`
-  /* border: 5px dotted ${({ theme }) => theme.colors.paris}; */
   background-color: ${({ theme }) => theme.colors.paris};
   width: 118px;
 `;

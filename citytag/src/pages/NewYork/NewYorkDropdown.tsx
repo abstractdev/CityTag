@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { setInterval } from "timers";
 import { DropdownProps } from "../../Interfaces";
 import { TargetBox } from "../../styles/Dropdown.styles";
 import { DropdownContainer } from "../../styles/Dropdown.styles";
@@ -116,10 +115,12 @@ export function NewYorkDropdown(props: DropdownProps) {
 //STYLED COMPONENTS//
 const TargetBoxNewYork = styled(TargetBox)`
   border: 8px solid ${({ theme }) => theme.colors.newyork};
+  @media screen and (max-width: 670px) {
+    border: 4px solid ${({ theme }) => theme.colors.newyork};
+  }
 `;
 
 const DropdownContainerNewYork = styled(DropdownContainer)`
-  /* border: 5px solid ${({ theme }) => theme.colors.newyork}; */
   background-color: ${({ theme }) => theme.colors.newyork};
 `;
 

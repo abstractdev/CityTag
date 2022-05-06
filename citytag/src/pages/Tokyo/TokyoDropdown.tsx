@@ -122,10 +122,12 @@ export function TokyoDropdown(props: DropdownProps) {
 //STYLED COMPONENTS//
 const TargetBoxTokyo = styled(TargetBox)`
   border: 8px solid ${({ theme }) => theme.colors.tokyo};
+  @media screen and (max-width: 670px) {
+    border: 4px solid ${({ theme }) => theme.colors.tokyo};
+  }
 `;
 
 const DropdownContainerTokyo = styled(DropdownContainer)`
-  /* border: 5px dotted ${({ theme }) => theme.colors.tokyo}; */
   background-color: ${({ theme }) => theme.colors.tokyo};
   width: 118px;
 `;

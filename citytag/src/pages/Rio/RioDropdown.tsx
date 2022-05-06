@@ -122,10 +122,12 @@ export function RioDropdown(props: DropdownProps) {
 //STYLED COMPONENTS//
 const TargetBoxRio = styled(TargetBox)`
   border: 8px solid ${({ theme }) => theme.colors.rio};
+  @media screen and (max-width: 670px) {
+    border: 4px solid ${({ theme }) => theme.colors.rio};
+  }
 `;
 
 const DropdownContainerRio = styled(DropdownContainer)`
-  /* border: 5px dotted ${({ theme }) => theme.colors.rio}; */
   background-color: ${({ theme }) => theme.colors.rio};
   width: 96px;
 `;
