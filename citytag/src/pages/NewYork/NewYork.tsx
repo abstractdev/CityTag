@@ -6,7 +6,13 @@ import { NewYorkFind } from "./NewYorkFind";
 import { CityImageContainer } from "../../styles/CityImage.styles";
 import { NewYorkDropdown } from "./NewYorkDropdown";
 import { useEffect, useState } from "react";
-import { setDoc, doc, collection } from "firebase/firestore";
+import {
+  setDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  collection,
+} from "firebase/firestore";
 import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { convertMsToDisplayTime } from "../../UtlityFunctions";
@@ -15,6 +21,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
+import { ScoreErrorSpan } from "../../components/ScoreErrorSpan";
 
 export function NewYork(props: CityProps) {
   const {
@@ -43,6 +50,10 @@ export function NewYork(props: CityProps) {
     setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
+    newyorkUserData,
+    setNewyorkUserData,
+    handleScoreErrorSpan,
+    scoreErrorSpanIsVisible,
   } = props;
   const broadwayText = "Broadway Sign";
   const hotdogText = "Hot Dog Vendor";
@@ -55,7 +66,7 @@ export function NewYork(props: CityProps) {
   useEffect(() => {
     let interval: NodeJS.Timer;
     if (isActive) {
-      const docRef = doc(collection(db, "nyUsers"));
+      const docRef = doc(collection(db, "users"));
       setDoc(docRef, { id: docRef.id });
       console.log("Document written");
       setUserId(docRef.id);
@@ -65,10 +76,14 @@ export function NewYork(props: CityProps) {
       }, 10);
     } else if (!isActive) {
       clearInterval(interval);
-      const userRef = doc(db, "nyUsers", userId);
+      const userRef = doc(db, "users", userId);
       setDoc(
         userRef,
-        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        {
+          city: "newyork",
+          time: time,
+          displayTime: `${convertMsToDisplayTime(time)}`,
+        },
         { merge: true }
       );
     }
@@ -97,9 +112,28 @@ export function NewYork(props: CityProps) {
     event.preventDefault();
     event.target.reset();
     setUserModalIsVisible(false);
-    const userRef = doc(db, "nyUsers", userId);
+    const userRef = doc(db, "users", userId);
     setDoc(userRef, { name: name }, { merge: true });
-    setLeaderboardIsVisible(true);
+    setTimeout(() => {
+      const getUserDataFromFirebase = (async () => {
+        let temp: any[] = [];
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          temp.push(doc.data());
+        });
+        const newyorkFiltered = temp.filter((e) => e.city === "newyork");
+        //validate score
+        const newYorkScores = newyorkUserData.map((e) => e.time);
+        const highestTime = Math.max(...newYorkScores);
+        if (time < highestTime) {
+          setNewyorkUserData([...newyorkFiltered]);
+          setLeaderboardIsVisible(true);
+        } else {
+          await deleteDoc(doc(db, "users", userId));
+          handleScoreErrorSpan();
+        }
+      })();
+    }, 100);
   }
 
   function handleOnChange(event: any) {
@@ -115,6 +149,7 @@ export function NewYork(props: CityProps) {
           cityText={"New York"}
           leaderboardIsVisible={leaderboardIsVisible}
           setLeaderboardIsVisible={setLeaderboardIsVisible}
+          newyorkUserData={newyorkUserData}
         />
       )}
       <UserModal
@@ -141,6 +176,7 @@ export function NewYork(props: CityProps) {
         >
           <CityImage src={ny} />
           {errorSpanIsVisible && <ErrorSpan />}
+          {scoreErrorSpanIsVisible && <ScoreErrorSpan />}
           <BroadwayDiv
             broadwayIsFound={broadwayIsFound}
             data-id="broadwayDiv"
@@ -194,6 +230,12 @@ const BroadwayDiv = styled.div<DivProps>`
   border: ${(props) => (props.broadwayIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) =>
     props.broadwayIsFound ? "3px solid #121212;" : "none"};
+  @media screen and (max-width: 670px) {
+    border: ${(props) =>
+      props.broadwayIsFound ? "2px solid #f2c205" : "none"};
+    outline: ${(props) =>
+      props.broadwayIsFound ? "1px solid #121212;" : "none"};
+  }
   border-radius: 5px;
 `;
 
@@ -205,6 +247,11 @@ const HotdogDiv = styled.div<DivProps>`
   bottom: 32%;
   border: ${(props) => (props.hotdogIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) => (props.hotdogIsFound ? "3px solid #121212;" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.hotdogIsFound ? "2px solid #f2c205" : "none")};
+    outline: ${(props) =>
+      props.hotdogIsFound ? "1px solid #121212;" : "none"};
+  }
   border-radius: 5px;
 `;
 const IlovenyDiv = styled.div<DivProps>`
@@ -215,6 +262,11 @@ const IlovenyDiv = styled.div<DivProps>`
   bottom: 42%;
   border: ${(props) => (props.ilovenyIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) => (props.ilovenyIsFound ? "3px solid #121212;" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.ilovenyIsFound ? "2px solid #f2c205" : "none")};
+    outline: ${(props) =>
+      props.ilovenyIsFound ? "1px solid #121212;" : "none"};
+  }
   border-radius: 5px;
 `;
 const PoliceDiv = styled.div<DivProps>`
@@ -225,5 +277,10 @@ const PoliceDiv = styled.div<DivProps>`
   bottom: 61%;
   border: ${(props) => (props.policeIsFound ? "5px solid #f2c205" : "none")};
   outline: ${(props) => (props.policeIsFound ? "3px solid #121212;" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.policeIsFound ? "2px solid #f2c205" : "none")};
+    outline: ${(props) =>
+      props.policeIsFound ? "1px solid #121212;" : "none"};
+  }
   border-radius: 5px;
 `;

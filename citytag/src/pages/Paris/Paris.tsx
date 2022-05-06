@@ -6,7 +6,13 @@ import { CityImage } from "../../styles/CityImage.styles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { ParisDropdown } from "./ParisDropdown";
-import { setDoc, doc, collection } from "firebase/firestore";
+import {
+  setDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  collection,
+} from "firebase/firestore";
 import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
@@ -15,6 +21,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
+import { ScoreErrorSpan } from "../../components/ScoreErrorSpan";
 
 export function Paris(props: CityProps) {
   const {
@@ -44,6 +51,10 @@ export function Paris(props: CityProps) {
     setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
+    parisUserData,
+    setParisUserData,
+    handleScoreErrorSpan,
+    scoreErrorSpanIsVisible,
   } = props;
 
   const brieText = "Brie";
@@ -54,28 +65,32 @@ export function Paris(props: CityProps) {
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
 
-  // useEffect(() => {
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
-  //     const docRef = doc(collection(db, "parisUsers"));
-  //     setDoc(docRef, { id: docRef.id });
-  //     console.log("Document written");
-  //     setUserId(docRef.id);
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      const docRef = doc(collection(db, "users"));
+      setDoc(docRef, { id: docRef.id });
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, "parisUsers", userId);
-  //     setDoc(
-  //       userRef,
-  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
-  //       { merge: true }
-  //     );
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, "users", userId);
+      setDoc(
+        userRef,
+        {
+          city: "paris",
+          time: time,
+          displayTime: `${convertMsToDisplayTime(time)}`,
+        },
+        { merge: true }
+      );
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (brieIsFound && fleurdelisIsFound && monalisaIsFound && tophatIsFound) {
@@ -99,8 +114,28 @@ export function Paris(props: CityProps) {
     event.preventDefault();
     event.target.reset();
     setUserModalIsVisible(false);
-    const userRef = doc(db, "parisUsers", userId);
+    const userRef = doc(db, "users", userId);
     setDoc(userRef, { name: name }, { merge: true });
+    setTimeout(() => {
+      const getUserDataFromFirebase = (async () => {
+        let temp: any[] = [];
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          temp.push(doc.data());
+        });
+        const parisFiltered = temp.filter((e) => e.city === "paris");
+        //validate score
+        const parisScores = parisUserData.map((e) => e.time);
+        const highestTime = Math.max(...parisScores);
+        if (time < highestTime) {
+          setParisUserData([...parisFiltered]);
+          setLeaderboardIsVisible(true);
+        } else {
+          await deleteDoc(doc(db, "users", userId));
+          handleScoreErrorSpan();
+        }
+      })();
+    }, 100);
   }
 
   function handleOnChange(event: any) {
@@ -115,6 +150,7 @@ export function Paris(props: CityProps) {
         cityText={"Paris"}
         leaderboardIsVisible={leaderboardIsVisible}
         setLeaderboardIsVisible={setLeaderboardIsVisible}
+        parisUserData={parisUserData}
       />
       <UserModal
         name={name}
@@ -140,6 +176,7 @@ export function Paris(props: CityProps) {
         >
           <CityImage src={paris} />
           {errorSpanIsVisible && <ErrorSpan />}
+          {scoreErrorSpanIsVisible && <ScoreErrorSpan />}
           <BrieDiv
             brieIsFound={brieIsFound}
             data-id="brieDiv"
@@ -193,6 +230,10 @@ const BrieDiv = styled.div<DivProps>`
   bottom: 60%;
   border: ${(props) => (props.brieIsFound ? "5px solid #f94910" : "none")};
   outline: ${(props) => (props.brieIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.brieIsFound ? "2px solid #f94910" : "none")};
+    outline: ${(props) => (props.brieIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const FleurdelisDiv = styled.div<DivProps>`
@@ -205,6 +246,12 @@ const FleurdelisDiv = styled.div<DivProps>`
     props.fleurdelisIsFound ? "5px solid #f94910" : "none"};
   outline: ${(props) =>
     props.fleurdelisIsFound ? "3px solid #121212" : "none"};
+  @media screen and (max-width: 670px) {
+    border: ${(props) =>
+      props.fleurdelisIsFound ? "2px solid #f94910" : "none"};
+    outline: ${(props) =>
+      props.fleurdelisIsFound ? "1px solid #121212" : "none"};
+  }
   border-radius: 5px;
 `;
 const MonalisaDiv = styled.div<DivProps>`
@@ -215,6 +262,12 @@ const MonalisaDiv = styled.div<DivProps>`
   bottom: 54.5%;
   border: ${(props) => (props.monalisaIsFound ? "5px solid #f94910" : "none")};
   outline: ${(props) => (props.monalisaIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) =>
+      props.monalisaIsFound ? "2px solid #f94910" : "none"};
+    outline: ${(props) =>
+      props.monalisaIsFound ? "1px solid #121212" : "none"};
+  }
   border-radius: 5px;
 `;
 const TophatDiv = styled.div<DivProps>`
@@ -225,5 +278,9 @@ const TophatDiv = styled.div<DivProps>`
   bottom: 9.3%;
   border: ${(props) => (props.tophatIsFound ? "5px solid #f94910" : "none")};
   outline: ${(props) => (props.tophatIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.tophatIsFound ? "2px solid #f94910" : "none")};
+    outline: ${(props) => (props.tophatIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;

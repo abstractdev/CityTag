@@ -6,7 +6,13 @@ import { CityImage } from "../../styles/CityImage.styles";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { TokyoDropdown } from "./TokyoDropdown";
-import { setDoc, doc, collection } from "firebase/firestore";
+import {
+  setDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  collection,
+} from "firebase/firestore";
 import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
@@ -15,6 +21,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
+import { ScoreErrorSpan } from "../../components/ScoreErrorSpan";
 
 export function Tokyo(props: CityProps) {
   const {
@@ -44,6 +51,10 @@ export function Tokyo(props: CityProps) {
     setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
+    tokyoUserData,
+    setTokyoUserData,
+    handleScoreErrorSpan,
+    scoreErrorSpanIsVisible,
   } = props;
 
   const geishaText = "Geisha";
@@ -57,7 +68,7 @@ export function Tokyo(props: CityProps) {
   useEffect(() => {
     let interval: NodeJS.Timer;
     if (isActive) {
-      const docRef = doc(collection(db, "tokyoUsers"));
+      const docRef = doc(collection(db, "users"));
       setDoc(docRef, { id: docRef.id });
       console.log("Document written");
       setUserId(docRef.id);
@@ -67,10 +78,14 @@ export function Tokyo(props: CityProps) {
       }, 10);
     } else if (!isActive) {
       clearInterval(interval);
-      const userRef = doc(db, "tokyoUsers", userId);
+      const userRef = doc(db, "users", userId);
       setDoc(
         userRef,
-        { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
+        {
+          city: "tokyo",
+          time: time,
+          displayTime: `${convertMsToDisplayTime(time)}`,
+        },
         { merge: true }
       );
     }
@@ -93,8 +108,28 @@ export function Tokyo(props: CityProps) {
     event.preventDefault();
     event.target.reset();
     setUserModalIsVisible(false);
-    const userRef = doc(db, "tokyoUsers", userId);
+    const userRef = doc(db, "users", userId);
     setDoc(userRef, { name: name }, { merge: true });
+    setTimeout(() => {
+      const getUserDataFromFirebase = (async () => {
+        let temp: any[] = [];
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          temp.push(doc.data());
+        });
+        const tokyoFiltered = temp.filter((e) => e.city === "tokyo");
+        //validate score
+        const tokyoScores = tokyoUserData.map((e) => e.time);
+        const highestTime = Math.max(...tokyoScores);
+        if (time < highestTime) {
+          setTokyoUserData([...tokyoFiltered]);
+          setLeaderboardIsVisible(true);
+        } else {
+          await deleteDoc(doc(db, "users", userId));
+          handleScoreErrorSpan();
+        }
+      })();
+    }, 100);
   }
 
   function handleOnChange(event: any) {
@@ -109,6 +144,7 @@ export function Tokyo(props: CityProps) {
         cityText={"Tokyo"}
         leaderboardIsVisible={leaderboardIsVisible}
         setLeaderboardIsVisible={setLeaderboardIsVisible}
+        tokyoUserData={tokyoUserData}
       />
       <UserModal
         name={name}
@@ -130,10 +166,11 @@ export function Tokyo(props: CityProps) {
         />
         <CityImageContainer
           onClick={(event) => handleMouseClickPosition(event)}
-          style={{ pointerEvents: !isActive ? 'none' : 'auto'}}
+          style={{ pointerEvents: !isActive ? "none" : "auto" }}
         >
           <CityImage src={tokyo} />
           {errorSpanIsVisible && <ErrorSpan />}
+          {scoreErrorSpanIsVisible && <ScoreErrorSpan />}
           <GeishaDiv
             geishaIsFound={geishaIsFound}
             data-id="geishaDiv"
@@ -180,13 +217,17 @@ export function Tokyo(props: CityProps) {
 //STYLED COMPONENTS//
 
 const GeishaDiv = styled.div<DivProps>`
-  width: 4.5%;
+  width: 5%;
   height: 11%;
   position: absolute;
-  left: 61.1%;
+  left: 60.8%;
   bottom: 59.2%;
   border: ${(props) => (props.geishaIsFound ? "5px solid #d78ebf" : "none")};
   outline: ${(props) => (props.geishaIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.geishaIsFound ? "2px solid #d78ebf" : "none")};
+    outline: ${(props) => (props.geishaIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const ParasolDiv = styled.div<DivProps>`
@@ -197,6 +238,11 @@ const ParasolDiv = styled.div<DivProps>`
   bottom: 76%;
   border: ${(props) => (props.parasolIsFound ? "5px solid #d78ebf" : "none")};
   outline: ${(props) => (props.parasolIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.parasolIsFound ? "2px solid #d78ebf" : "none")};
+    outline: ${(props) =>
+      props.parasolIsFound ? "1px solid #121212" : "none"};
+  }
   border-radius: 5px;
 `;
 const SushiDiv = styled.div<DivProps>`
@@ -207,6 +253,10 @@ const SushiDiv = styled.div<DivProps>`
   bottom: 92%;
   border: ${(props) => (props.sushiIsFound ? "5px solid #d78ebf" : "none")};
   outline: ${(props) => (props.sushiIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.sushiIsFound ? "2px solid #d78ebf" : "none")};
+    outline: ${(props) => (props.sushiIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const SumoDiv = styled.div<DivProps>`
@@ -217,5 +267,9 @@ const SumoDiv = styled.div<DivProps>`
   bottom: 17.5%;
   border: ${(props) => (props.sumoIsFound ? "5px solid #d78ebf" : "none")};
   outline: ${(props) => (props.sumoIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.sumoIsFound ? "2px solid #d78ebf" : "none")};
+    outline: ${(props) => (props.sumoIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;

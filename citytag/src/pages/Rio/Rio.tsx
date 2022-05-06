@@ -6,7 +6,13 @@ import { RioFind } from "./RioFind";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { RioDropdown } from "./RioDropdown";
-import { setDoc, doc, collection } from "firebase/firestore";
+import {
+  setDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  collection,
+} from "firebase/firestore";
 import { db } from "../../components/Firebase";
 import { CityProps } from "../../Interfaces";
 import { AudioFunctions } from "../../UtlityFunctions";
@@ -15,6 +21,7 @@ import { DivProps } from "../../Interfaces";
 import { ErrorSpan } from "../../components/ErrorSpan";
 import { UserModal } from "../../components/UserModal";
 import { LeaderboardModal } from "../../components/LeaderboardModal";
+import { ScoreErrorSpan } from "../../components/ScoreErrorSpan";
 
 export function Rio(props: CityProps) {
   const {
@@ -44,6 +51,10 @@ export function Rio(props: CityProps) {
     setUserModalIsVisible,
     leaderboardIsVisible,
     setLeaderboardIsVisible,
+    rioUserData,
+    setRioUserData,
+    handleScoreErrorSpan,
+    scoreErrorSpanIsVisible,
   } = props;
   const dancerText = "Dancer";
   const flagText = "Flag";
@@ -52,28 +63,32 @@ export function Rio(props: CityProps) {
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
 
-  // useEffect(() => {
-  //   let interval: NodeJS.Timer;
-  //   if (isActive) {
-  //     const docRef = doc(collection(db, "rioUsers"));
-  //     setDoc(docRef, { id: docRef.id });
-  //     console.log("Document written");
-  //     setUserId(docRef.id);
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isActive) {
+      const docRef = doc(collection(db, "users"));
+      setDoc(docRef, { id: docRef.id });
+      console.log("Document written");
+      setUserId(docRef.id);
 
-  //     interval = setInterval(() => {
-  //       setTime((prev) => prev + 10);
-  //     }, 10);
-  //   } else if (!isActive) {
-  //     clearInterval(interval);
-  //     const userRef = doc(db, "rioUsers", userId);
-  //     setDoc(
-  //       userRef,
-  //       { time: time, displayTime: `${convertMsToDisplayTime(time)}` },
-  //       { merge: true }
-  //     );
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isActive]);
+      interval = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    } else if (!isActive) {
+      clearInterval(interval);
+      const userRef = doc(db, "users", userId);
+      setDoc(
+        userRef,
+        {
+          city: "rio",
+          time: time,
+          displayTime: `${convertMsToDisplayTime(time)}`,
+        },
+        { merge: true }
+      );
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   useEffect(() => {
     if (dancerIsFound && flagIsFound && soccerIsFound && tambourineIsFound) {
@@ -97,8 +112,28 @@ export function Rio(props: CityProps) {
     event.preventDefault();
     event.target.reset();
     setUserModalIsVisible(false);
-    const userRef = doc(db, "rioUsers", userId);
+    const userRef = doc(db, "users", userId);
     setDoc(userRef, { name: name }, { merge: true });
+    setTimeout(() => {
+      const getUserDataFromFirebase = (async () => {
+        let temp: any[] = [];
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          temp.push(doc.data());
+        });
+        const rioFiltered = temp.filter((e) => e.city === "rio");
+        //validate score
+        const rioScores = rioUserData.map((e) => e.time);
+        const highestTime = Math.max(...rioScores);
+        if (time < highestTime) {
+          setRioUserData([...rioFiltered]);
+          setLeaderboardIsVisible(true);
+        } else {
+          await deleteDoc(doc(db, "users", userId));
+          handleScoreErrorSpan();
+        }
+      })();
+    }, 100);
   }
 
   function handleOnChange(event: any) {
@@ -112,6 +147,7 @@ export function Rio(props: CityProps) {
         cityText="Rio De Janeiro"
         leaderboardIsVisible={leaderboardIsVisible}
         setLeaderboardIsVisible={setLeaderboardIsVisible}
+        rioUserData={rioUserData}
       />
       <UserModal
         name={name}
@@ -137,6 +173,7 @@ export function Rio(props: CityProps) {
         >
           <CityImage src={rio} />
           {errorSpanIsVisible && <ErrorSpan />}
+          {scoreErrorSpanIsVisible && <ScoreErrorSpan />}
           <DancerDiv
             dancerIsFound={dancerIsFound}
             data-id="dancerDiv"
@@ -191,6 +228,10 @@ const DancerDiv = styled.div<DivProps>`
   bottom: 52%;
   border: ${(props) => (props.dancerIsFound ? "5px solid #00ad73" : "none")};
   outline: ${(props) => (props.dancerIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.dancerIsFound ? "2px solid #00ad73" : "none")};
+    outline: ${(props) => (props.dancerIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const FlagDiv = styled.div<DivProps>`
@@ -203,6 +244,10 @@ const FlagDiv = styled.div<DivProps>`
   bottom: 32%;
   border: ${(props) => (props.flagIsFound ? "5px solid #00ad73" : "none")};
   outline: ${(props) => (props.flagIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.flagIsFound ? "2px solid #00ad73" : "none")};
+    outline: ${(props) => (props.flagIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const SoccerDiv = styled.div<DivProps>`
@@ -215,6 +260,10 @@ const SoccerDiv = styled.div<DivProps>`
   bottom: 10%;
   border: ${(props) => (props.soccerIsFound ? "5px solid #00ad73" : "none")};
   outline: ${(props) => (props.soccerIsFound ? "3px solid #121212" : "none")};
+  @media screen and (max-width: 670px) {
+    border: ${(props) => (props.soccerIsFound ? "2px solid #00ad73" : "none")};
+    outline: ${(props) => (props.soccerIsFound ? "1px solid #121212" : "none")};
+  }
   border-radius: 5px;
 `;
 const TambourineDiv = styled.div<DivProps>`
@@ -229,5 +278,11 @@ const TambourineDiv = styled.div<DivProps>`
     props.tambourineIsFound ? "5px solid #00ad73" : "none"};
   outline: ${(props) =>
     props.tambourineIsFound ? "3px solid #121212" : "none"};
+  @media screen and (max-width: 670px) {
+    border: ${(props) =>
+      props.tambourineIsFound ? "2px solid #00ad73" : "none"};
+    outline: ${(props) =>
+      props.tambourineIsFound ? "1px solid #121212" : "none"};
+  }
   border-radius: 5px;
 `;
