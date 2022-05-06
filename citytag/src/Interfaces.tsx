@@ -49,6 +49,64 @@ export interface CityProps {
   setUserModalIsVisible?: (modalIsVisible: boolean) => void;
   leaderboardIsVisible?: boolean;
   setLeaderboardIsVisible: (leaderboardIsVisible: boolean) => void;
+  newyorkUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  setNewyorkUserData?: (
+    newyorkUserData: Array<{
+      id: string;
+      name: string;
+      displayTime: string;
+      time: number;
+    }>
+  ) => void;
+  parisUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  setParisUserData?: (
+    parisUserData: Array<{
+      id: string;
+      name: string;
+      displayTime: string;
+      time: number;
+    }>
+  ) => void;
+  rioUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  setRioUserData?: (
+    rioUserData: Array<{
+      id: string;
+      name: string;
+      displayTime: string;
+      time: number;
+    }>
+  ) => void;
+  tokyoUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  setTokyoUserData?: (
+    tokyoUserData: Array<{
+      id: string;
+      name: string;
+      displayTime: string;
+      time: number;
+    }>
+  ) => void;
+  handleScoreErrorSpan?: () => void;
+  scoreErrorSpanIsVisible?: boolean;
 }
 
 export interface DropdownProps {
@@ -140,6 +198,7 @@ export interface TimerProps {
 }
 
 export interface HomeProps {
+  isActive: boolean;
   setIsActive: (isActive: boolean) => void;
 }
 
@@ -176,15 +235,63 @@ export interface LeaderboardModalProps {
   cityText: string;
   leaderboardIsVisible?: boolean;
   setLeaderboardIsVisible?: (modalIsVisible: boolean) => void;
+  newyorkUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  parisUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  rioUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  tokyoUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
 }
 
 export interface LeaderboardModalCloseButtonProps {
   setLeaderboardIsVisible?: (leaderboardIsVisible: boolean) => void;
 }
 export interface UserModalCloseButtonProps {
-  setUserModalIsOpen?: (modalIsOpen: boolean) => void;
+  setUserModalIsVisible?: (userModalIsVisible: boolean) => void;
 }
 export interface LeaderboardProps {
-  cityFont: string;
-  cityColor: string;
+  cityFont?: string;
+  cityColor?: string;
+  newyorkUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  parisUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  rioUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
+  tokyoUserData?: Array<{
+    id: string;
+    name: string;
+    displayTime: string;
+    time: number;
+  }>;
 }
