@@ -25,7 +25,8 @@ export function AudioFunctions() {
 export function clickOutsideFunction(
   contentState: boolean,
   contentSetter: (contentState: boolean) => void,
-  contentRef: any
+  contentRef: any,
+  navigate: (delta: number) => void
 ) {
   const handleClickOutside = (event: any) => {
     if (
@@ -34,10 +35,31 @@ export function clickOutsideFunction(
       !contentRef.current.contains(event.target)
     ) {
       contentSetter(false);
+      navigate(-1);
+      setTimeout(() => {
+        navigate(0);
+      }, 200);
     }
   };
   document.addEventListener("click", handleClickOutside);
   return () => {
     document.removeEventListener("click", handleClickOutside);
   };
+}
+export function trimData(string: string) {
+  let arr: string[];
+  let arr2: string[];
+  if (string[0] === "0") {
+    arr = string.split("");
+    arr.splice(0, 5);
+    string = arr.join("");
+
+    if (string[0] === "0") {
+      arr2 = string.split("");
+      arr2.splice(0, 1);
+      string = arr2.join("");
+    }
+    return string;
+  }
+  return string;
 }
