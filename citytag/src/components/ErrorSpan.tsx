@@ -8,15 +8,16 @@ export function ErrorSpan() {
   );
 }
 
-const StyledErrorSpan = styled.span`
+export const StyledErrorSpan = styled.span`
   color: red;
   background-color: #fff;
   position: fixed;
   left: 50%;
-  top: 50%;
-  transform: translateX(-50% -50%);
+  bottom: 50%;
+  transform: translateX(-50%);
   padding: 0.5rem;
   border-radius: 5px;
   z-index: 10;
   font-family: "metropolisB";
+  text-align: center;
 `;
