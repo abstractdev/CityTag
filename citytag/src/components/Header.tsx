@@ -10,7 +10,9 @@ export function Header(props: HeaderProps) {
       <StyledHeaderTextContainer>
         <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
       </StyledHeaderTextContainer>
-      {props.isActive && <Timer time={props.time} isActive={props.isActive} />}
+      {props.isActive ? (
+        <Timer time={props.time} isActive={props.isActive} />
+      ) : null}
       <LeaderboardDropdown />
     </StyledHeaderContainer>
   );
@@ -23,7 +25,7 @@ const StyledHeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #fff;
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     padding-left: 2rem;
     padding-right: 2rem;
   }
@@ -39,7 +41,7 @@ const StyledHeaderText = styled(Link)`
   font-size: 4rem;
   text-decoration: none;
 
-  @media screen and (max-width: 644px) {
+  @media screen and (max-width: 670px) {
     font-size: 2rem;
   }
 `;
