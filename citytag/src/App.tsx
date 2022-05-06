@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./components/GlobalStyles";
 import { Header } from "./components/Header";
@@ -25,7 +25,7 @@ const theme = {
     paris: "#f94910",
     rio: "#00ad73",
     tokyo: "#d78ebf",
-  }
+  },
 };
 function App() {
   const [mouseX, setMouseX] = useState(0);
@@ -52,8 +52,32 @@ function App() {
   const [tophatIsFound, setTophatIsFound] = useState(false);
   const [dropdownIsShifted, setDropdownIsShifted] = useState(false);
   const [errorSpanIsVisible, setErrorSpanIsVisible] = useState(false);
+  const [scoreErrorSpanIsVisible, setScoreErrorSpanIsVisible] = useState(false);
   const [userModalIsVisible, setUserModalIsVisible] = useState(false);
   const [leaderboardIsVisible, setLeaderboardIsVisible] = useState(false);
+  const [newyorkUserData, setNewyorkUserData] = useState([]);
+  const [parisUserData, setParisUserData] = useState([]);
+  const [rioUserData, setRioUserData] = useState([]);
+  const [tokyoUserData, setTokyoUserData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getUserDataFromFirebase = (async () => {
+      let temp: any[] = [];
+      const querySnapshot = await getDocs(collection(db, "users"));
+      querySnapshot.forEach((doc) => {
+        temp.push(doc.data());
+      });
+      const newyorkFiltered = temp.filter((e) => e.city === "newyork");
+      setNewyorkUserData([...newyorkFiltered]);
+      const parisFiltered = temp.filter((e) => e.city === "paris");
+      setParisUserData([...parisFiltered]);
+      const rioFiltered = temp.filter((e) => e.city === "rio");
+      setRioUserData([...rioFiltered]);
+      const tokyoFiltered = temp.filter((e) => e.city === "tokyo");
+      setTokyoUserData([...tokyoFiltered]);
+    })();
+  }, []);
 
   function handleMouseClickPosition(event: any) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -102,6 +126,15 @@ function App() {
       setErrorSpanIsVisible(false);
     }, 2000);
   }
+  function handleScoreErrorSpan() {
+    setScoreErrorSpanIsVisible(true);
+    setTimeout(() => {
+      navigate(-1);
+      setTimeout(() => {
+        navigate(0);
+      }, 200);
+    }, 7000);
+  }
 
   return (
     <>
@@ -109,11 +142,50 @@ function App() {
         <GlobalStyles />
         <Header time={time} isActive={isActive} />
         <Routes>
-          <Route path="/" element={<Home setIsActive={setIsActive} />} />
-          <Route path="newyorkleaderboard" element={<NewYorkLeaderboard cityFont={"newyork"} cityColor={"#f2c205"}/>}/>
-          <Route path="parisleaderboard" element={<ParisLeaderboard cityFont={"paris"} cityColor={"#f94910"}/>}/>
-          <Route path="rioleaderboard" element={<RioLeaderboard cityFont={"rio"} cityColor={"#00ad73"}/>}/>
-          <Route path="tokyoleaderboard" element={<TokyoLeaderboard cityFont={"tokyo"} cityColor={"#d78ebf"}/>}/>
+          <Route
+            path="/"
+            element={<Home isActive={isActive} setIsActive={setIsActive} />}
+          />
+          <Route
+            path="newyorkleaderboard"
+            element={
+              <NewYorkLeaderboard
+                cityFont={"newyork"}
+                cityColor={"#f2c205"}
+                newyorkUserData={newyorkUserData}
+              />
+            }
+          />
+          <Route
+            path="parisleaderboard"
+            element={
+              <ParisLeaderboard
+                cityFont={"paris"}
+                cityColor={"#f94910"}
+                parisUserData={parisUserData}
+              />
+            }
+          />
+          <Route
+            path="rioleaderboard"
+            element={
+              <RioLeaderboard
+                cityFont={"rio"}
+                cityColor={"#00ad73"}
+                rioUserData={rioUserData}
+              />
+            }
+          />
+          <Route
+            path="tokyoleaderboard"
+            element={
+              <TokyoLeaderboard
+                cityFont={"tokyo"}
+                cityColor={"#d78ebf"}
+                tokyoUserData={tokyoUserData}
+              />
+            }
+          />
           <Route
             path="/newyork"
             element={
@@ -144,6 +216,10 @@ function App() {
                 setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
+                newyorkUserData={newyorkUserData}
+                setNewyorkUserData={setNewyorkUserData}
+                handleScoreErrorSpan={handleScoreErrorSpan}
+                scoreErrorSpanIsVisible={scoreErrorSpanIsVisible}
               />
             }
           />
@@ -177,6 +253,10 @@ function App() {
                 setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
+                rioUserData={rioUserData}
+                setRioUserData={setRioUserData}
+                handleScoreErrorSpan={handleScoreErrorSpan}
+                scoreErrorSpanIsVisible={scoreErrorSpanIsVisible}
               />
             }
           />
@@ -210,6 +290,10 @@ function App() {
                 setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
+                tokyoUserData={tokyoUserData}
+                setTokyoUserData={setTokyoUserData}
+                handleScoreErrorSpan={handleScoreErrorSpan}
+                scoreErrorSpanIsVisible={scoreErrorSpanIsVisible}
               />
             }
           />
@@ -243,6 +327,10 @@ function App() {
                 setUserModalIsVisible={setUserModalIsVisible}
                 leaderboardIsVisible={leaderboardIsVisible}
                 setLeaderboardIsVisible={setLeaderboardIsVisible}
+                parisUserData={parisUserData}
+                setParisUserData={setParisUserData}
+                handleScoreErrorSpan={handleScoreErrorSpan}
+                scoreErrorSpanIsVisible={scoreErrorSpanIsVisible}
               />
             }
           />
