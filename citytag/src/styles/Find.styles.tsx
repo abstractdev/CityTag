@@ -16,7 +16,7 @@ export const FindImageContainer = styled(VFlexContainer)`
   height: 100px;
   width: 200px;
   gap: 0.3rem;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 670px) {
     font-size: 0;
     height: 60px;
   }
