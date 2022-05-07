@@ -113,7 +113,11 @@ export function NewYork(props: CityProps) {
     event.target.reset();
     setUserModalIsVisible(false);
     const userRef = doc(db, "users", userId);
-    setDoc(userRef, { name: name }, { merge: true });
+    setDoc(
+      userRef,
+      { name: name === "" ? "Anonymous" : name },
+      { merge: true }
+    );
     setTimeout(() => {
       const getUserDataFromFirebase = (async () => {
         let temp: any[] = [];
