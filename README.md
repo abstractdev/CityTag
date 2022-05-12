@@ -1,7 +1,8 @@
 # City Tag
-![Alt text](./citytag.png "City Tag")
+[![City Tag](./citytag.png)](https://abstractdev.github.io/city-tag/)
 ============
 
+[Live Demo](https://abstractdev.github.io/city-tag/)</br>
 A "Seek-And-Find" game similar to Where's Waldo.
 All images by Gus Morais.
 
