@@ -29,6 +29,7 @@ export function Footer() {
 }
 
 const StyledFooterContainer = styled.div`
+  color: #121212;
   position: fixed;
   left: 0;
   bottom: 0;
