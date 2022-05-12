@@ -13,16 +13,16 @@ export function Home(props: HomeProps) {
       <HomeContainer>
         <HomeText>Choose a city</HomeText>
         <HomeContent>
-          <Link to="newyork" onClick={() => setIsActive(true)}>
+          <Link to="/city-tag/newyork" onClick={() => setIsActive(true)}>
             <HomeNy />
           </Link>
-          <Link to="rio" onClick={() => setIsActive(true)}>
+          <Link to="/city-tag/rio" onClick={() => setIsActive(true)}>
             <HomeRio />
           </Link>
-          <Link to="tokyo" onClick={() => setIsActive(true)}>
+          <Link to="/city-tag/tokyo" onClick={() => setIsActive(true)}>
             <HomeTokyo />
           </Link>
-          <Link to="paris" onClick={() => setIsActive(true)}>
+          <Link to="/city-tag/paris" onClick={() => setIsActive(true)}>
             <HomeParis />
           </Link>
         </HomeContent>
