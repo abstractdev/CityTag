@@ -143,7 +143,7 @@ function App() {
         <Header time={time} isActive={isActive} />
         <Routes>
           <Route
-            path="/"
+            path="/city-tag"
             element={<Home isActive={isActive} setIsActive={setIsActive} />}
           />
           <Route

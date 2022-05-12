@@ -8,7 +8,7 @@ export function Header(props: HeaderProps) {
   return (
     <StyledHeaderContainer>
       <StyledHeaderTextContainer>
-        <StyledHeaderText to="/">CITY TAG</StyledHeaderText>
+        <StyledHeaderText to="/city-tag">CITY TAG</StyledHeaderText>
       </StyledHeaderTextContainer>
       {props.isActive ? (
         <Timer time={props.time} isActive={props.isActive} />
