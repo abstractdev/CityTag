@@ -187,7 +187,7 @@ function App() {
             }
           />
           <Route
-            path="/newyork"
+            path="city-tag/newyork"
             element={
               <NewYork
                 mouseX={mouseX}
@@ -224,7 +224,7 @@ function App() {
             }
           />
           <Route
-            path="/rio"
+            path="city-tag/rio"
             element={
               <Rio
                 mouseX={mouseX}
@@ -261,7 +261,7 @@ function App() {
             }
           />
           <Route
-            path="/tokyo"
+            path="city-tag/tokyo"
             element={
               <Tokyo
                 mouseX={mouseX}
@@ -298,7 +298,7 @@ function App() {
             }
           />
           <Route
-            path="/paris"
+            path="city-tag/paris"
             element={
               <Paris
                 mouseX={mouseX}
