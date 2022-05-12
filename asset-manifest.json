@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/city-tag/static/js/main.5d447c21.js",
+    "main.js": "/city-tag/static/js/main.12f7faf2.js",
     "static/media/tokyo.jpg": "/city-tag/static/media/tokyo.c687bf654de4d1ffbbf7.jpg",
     "static/media/paris.jpg": "/city-tag/static/media/paris.2a52758b71e26bacf946.jpg",
     "static/media/ny.jpg": "/city-tag/static/media/ny.959c9817dde20ef248ba.jpg",
@@ -33,9 +33,9 @@
     "static/media/metropolis.regular.otf": "/city-tag/static/media/metropolis.regular.67a1988d7b65b0aaa16d.otf",
     "static/media/Newyorkcity.ttf": "/city-tag/static/media/Newyorkcity.1d078aa99f34c48a15af.ttf",
     "index.html": "/city-tag/index.html",
-    "main.5d447c21.js.map": "/city-tag/static/js/main.5d447c21.js.map"
+    "main.12f7faf2.js.map": "/city-tag/static/js/main.12f7faf2.js.map"
   },
   "entrypoints": [
-    "static/js/main.5d447c21.js"
+    "static/js/main.12f7faf2.js"
   ]
 }
