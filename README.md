@@ -3,7 +3,7 @@
 ============
 
 [Live Demo](https://abstractdev.github.io/city-tag/)</br>
-A "Seek-And-Find" game similar to Where's Waldo using Typescript.
+A "Seek-And-Find" game similar to Where's Waldo made with Typescript.
 All images by Gus Morais.
 
 ---
