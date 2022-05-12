@@ -121,13 +121,31 @@ export function Tokyo(props: CityProps) {
         querySnapshot.forEach((doc) => {
           temp.push(doc.data());
         });
-        const tokyoFiltered = temp.filter((e) => e.city === "tokyo");
+        let tokyoFiltered = temp.filter((e) => e.city === "tokyo");
         //validate score
         const tokyoScores = tokyoUserData.map((e) => e.time);
         const highestTime = Math.max(...tokyoScores);
-        if (time < highestTime) {
+        //add user score to leaderboard if there is room
+        if (time < highestTime && tokyoFiltered.length <= 19) {
           setTokyoUserData([...tokyoFiltered]);
           setLeaderboardIsVisible(true);
+        }
+        //if there is not enough room but the score qualifies, remove the highest time from array and firebase
+        else if (time < highestTime && tokyoFiltered.length === 20) {
+          const removeHighest = (async () => {
+            const highestUser = tokyoFiltered.find(
+              (e) => e.time === highestTime
+            );
+            await deleteDoc(doc(db, "users", highestUser.id));
+            const removeHighestUserFromArray = (() => {
+              tokyoFiltered = tokyoFiltered.filter((e) => {
+                return e.time !== highestTime;
+              });
+            })();
+            setTokyoUserData([...tokyoFiltered]);
+            setLeaderboardIsVisible(true);
+          })();
+          //otherwise remove user
         } else {
           await deleteDoc(doc(db, "users", userId));
           handleScoreErrorSpan();

@@ -125,13 +125,31 @@ export function NewYork(props: CityProps) {
         querySnapshot.forEach((doc) => {
           temp.push(doc.data());
         });
-        const newyorkFiltered = temp.filter((e) => e.city === "newyork");
+        let newyorkFiltered = temp.filter((e) => e.city === "newyork");
         //validate score
         const newYorkScores = newyorkUserData.map((e) => e.time);
         const highestTime = Math.max(...newYorkScores);
-        if (time < highestTime) {
+        //add user score to leaderboard if there is room
+        if (time < highestTime && newyorkFiltered.length <= 19) {
           setNewyorkUserData([...newyorkFiltered]);
           setLeaderboardIsVisible(true);
+        }
+        //if there is not enough room but the score qualifies, remove the highest time from array and firebase
+        else if (time < highestTime && newyorkFiltered.length === 20) {
+          const removeHighest = (async () => {
+            const highestUser = newyorkFiltered.find(
+              (e) => e.time === highestTime
+            );
+            await deleteDoc(doc(db, "users", highestUser.id));
+            const removeHighestUserFromArray = (() => {
+              newyorkFiltered = newyorkFiltered.filter((e) => {
+                return e.time !== highestTime;
+              });
+            })();
+            setNewyorkUserData([...newyorkFiltered]);
+            setLeaderboardIsVisible(true);
+          })();
+          //otherwise remove user
         } else {
           await deleteDoc(doc(db, "users", userId));
           handleScoreErrorSpan();
