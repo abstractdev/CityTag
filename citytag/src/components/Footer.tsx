@@ -29,7 +29,6 @@ export function Footer() {
 }
 
 const StyledFooterContainer = styled.div`
-  color: #121212;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -47,6 +46,7 @@ const StyledFooterContainer = styled.div`
 
 const StyledLink = styled.a`
   text-decoration: none;
+  color: #121212;
 `;
 
 const StyledDiv = styled.div`
