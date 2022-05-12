@@ -6,19 +6,19 @@ export function Footer() {
     <>
       <StyledFooterContainer>
         <StyledDiv>
-          <StyledLink href="https://github.com/abstractdev">
+          <StyledLink target="_blank" rel="noreferrer noopener" href="https://github.com/abstractdev">
             <AiOutlineBehanceSquare />
           </StyledLink>
-          <StyledLink href="http://www.behance.net/gusmorais">
+          <StyledLink target="_blank" rel="noreferrer noopener"  href="http://www.behance.net/gusmorais">
             {" "}
             All images by Gus Morais
           </StyledLink>
         </StyledDiv>
         <StyledDiv>
-          <StyledLink href="https://github.com/abstractdev">
+          <StyledLink target="_blank" rel="noreferrer noopener" href="https://github.com/abstractdev">
             <AiOutlineGithub />
           </StyledLink>
-          <StyledLink href="https://github.com/abstractdev">
+          <StyledLink target="_blank" rel="noreferrer noopener" href="https://github.com/abstractdev">
             {" "}
             Site by abstractdev
           </StyledLink>
